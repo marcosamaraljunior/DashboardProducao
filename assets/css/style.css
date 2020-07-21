@@ -1,0 +1,56 @@
+#infoHeader{
+    font-size: 3vw;
+    font-weight: bold;
+    font-style: italic;
+}
+
+#previous-shifts thead{
+    background-color: #0ABDA0;
+    font-weight: bold;
+    font-size: 2vw;
+}
+#previous-shifts thead th{
+    padding: 0px !important;
+    color: white;
+    border: none;
+}
+
+ .th-capacity{
+    background-color: #FFFFFF;
+    font-weight: bold;
+    font-size: 1vw;
+    color: black !important;
+    
+}
+.th-plan{
+    background-color: #80ADD7;
+    font-weight: bold;
+    font-size: 1vw;
+    color: white;
+}
+ .th-real{
+    background-color: #0294A5;
+    font-weight: bold;
+    font-size: 1vw;
+    color: white;
+}
+
+body{
+    background-color: #ffffff !important;
+
+}
+
+#current-shift table{
+    text-align: center;
+    border: black 1px solid;
+    padding: 0px !important;
+}
+#current-shift table th{
+    text-align: center;
+    border: black 1px solid;
+}
+
+.modal-header{
+    background-color: #0294A5;
+    text-align: center !important;
+}
