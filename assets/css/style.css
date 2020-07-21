@@ -4,6 +4,15 @@
     font-style: italic;
 }
 
+#oee-status-circle{
+    position: absolute;
+    border-radius: 50%;
+    width: 50vw;
+    height: 2.5vw;
+    top: 25%;
+    left: 85%;
+}
+
 #previous-shifts thead{
     background-color: #0ABDA0;
     font-weight: bold;
@@ -12,11 +21,18 @@
 #previous-shifts thead th{
     padding: 0px !important;
     color: white;
+    border: black 1px solid;
+}
+#previous-shifts td{
+    padding: 0px !important;
+    color: black;
+    font-size: 1.3vw;
+    font-weight: bold;
     border: none;
 }
 
  .th-capacity{
-    background-color: #FFFFFF;
+    background-color: #CAFAFE;
     font-weight: bold;
     font-size: 1vw;
     color: black !important;
@@ -37,7 +53,6 @@
 
 body{
     background-color: #ffffff !important;
-
 }
 
 #current-shift table{
@@ -53,4 +68,23 @@ body{
 .modal-header{
     background-color: #0294A5;
     text-align: center !important;
+}
+
+.flash{
+    animation-name: flash-status;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes flash-status{
+    0%{
+        background-color: #ED2939;
+    }
+    50%{
+        background-color: #9D0025;
+        opacity: 0.3;
+    }
+    100%{
+        background-color: #e52325;
+    }
 }

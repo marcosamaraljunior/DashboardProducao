@@ -25,23 +25,24 @@
             <div class=" m-0 mt-0 mb-0">
                 <div class="container-fluid">
                     <div class="row ">
-                        <div style='display: table-cell;' class="col-md-3  p-0 m-0">
+                        <div style='display: table-cell;' class="col-lg-3  p-0 m-0">
                             <div id='machineInfo' class="text-center border border-dark">
                                 <span id='machineSpan'> WS0010 </span>
                             </div>
                         </div>
 
-                        <div class="col-md-3  p-0 m-0">
+                        <div class="col-lg-3  p-0 m-0">
                             <div id='skuInfo' class=" text-center border border-dark">
                                 <span id='textSKUInfo'> CHW3400B5XP </span>
                             </div>
                         </div>
-                        <div class="col-md-3  p-0 m-0">
-                            <div id='OEEInfo' class=" text-center border border-dark">
-                                <span id='OEE-text'> OEE : 85%</span>
+                        <div class="col-lg-3  border border-dark p-0 m-0">
+                            <div id='OEEInfo' class="text-center p-0 row m-0 pl-3" style="position: relative;">
+                                <span id='OEE-text' class="col-md-11 pl-5"> OEE : 85%</span>
+                                <div class="col-md-1" id="oee-status-circle"></div>
                             </div>
                         </div>
-                        <div class="col-md-3  p-0 m-0" data-toggle="modal" data-target="#scrap-modal">
+                        <div class="col-lg-3  p-0 m-0" data-toggle="modal" data-target="#scrap-modal">
                             <div id='scrapInfo' class=" text-center border border-dark">
                                 <span id='scrap-text'>SCRAP : 0</span>
                             </div>
@@ -56,10 +57,10 @@
             <div class="container-fluid">
                 <div class=" p-0 m-0">
                     <div class="row mt-0 mb-0 border border-dark">
-                        <div class="col-md-6 p-0 border border-dark">
+                        <div class="col-lg-6 p-0 border border-dark">
                             <div class="previous-Shifts-Table-Div">
-                                <table class='table m-0' id='table-shift1'>
-                                    <thead class="text-center">
+                                <table class='table m-0 text-center' id='table-shift1'>
+                                    <thead>
                                         <tr>
                                             <th id='tile-previous-shift1' colspan='5'> Turno W</th>
                                         </tr>
@@ -72,12 +73,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-
+                                        <tr>
+                                            <td>1000</td>
+                                            <td>-300</td>
+                                            <td>750</td>
+                                            <td>-50</td>
+                                            <td>700</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md-6 p-0 border border-dark">
+                        <div class="col-lg-6 p-0 border border-dark">
                             <div class="previous-Shifts-Table-Div">
                                 <table class='table m-0 text-center' id='table-shift2'>
                                     <thead>
@@ -95,18 +102,24 @@
 
                                     </thead>
                                     <tbody>
-
+                                        <tr>
+                                            <td>1000</td>
+                                            <td>-300</td>
+                                            <td>750</td>
+                                            <td>-50</td>
+                                            <td>700</td>
+                                        </tr>
                                     </tbody>
 
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <div class="row mb-2 border border-dark">
-                        <div class="col-md-6 p-0 border border-dark">
+                    <div class="row mb-0 border border-dark">
+                        <div class="col-lg-6 p-0 border border-dark">
                             <div class="previous-Shifts-Table-Div">
-                                <table class='table m-0 ' id='table-shift3'>
-                                    <thead class="text-center">
+                                <table class='table m-0 text-center' id='table-shift3'>
+                                    <thead>
                                         <tr>
                                             <th id='title-previous-shift3' colspan='5'>Turno Y</th>
                                         </tr>
@@ -121,18 +134,23 @@
 
                                     </thead>
                                     <tbody>
-
+                                        <tr>
+                                            <td>1000</td>
+                                            <td>-300</td>
+                                            <td>750</td>
+                                            <td>-50</td>
+                                            <td>700</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md-6 p-0 border border-dark">
+                        <div class="col-lg-6 p-0 border border-dark">
                             <div class="previous-Shifts-Table-Div">
                                 <table class='table m-0 text-center' id='table-shift4'>
                                     <thead>
                                         <tr>
-                                            <th class='tituloAnteriores text-center' id='title-previous-shift4'
-                                                colspan='5'>
+                                            <th id='title-previous-shift4' colspan='5'>
                                                 Turno Z</th>
                                         </tr>
                                         <tr>
@@ -146,7 +164,13 @@
 
                                     </thead>
                                     <tbody>
-
+                                        <tr>
+                                            <td>1000</td>
+                                            <td>-300</td>
+                                            <td>750</td>
+                                            <td>-50</td>
+                                            <td>700</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -210,7 +234,7 @@
 
                         <div class="row mr-1 ml-1 mb-0">
                             <div id='divHeaderModalParada' onclick='getParada()'
-                                class="col-md-6 text-center text-black rounded bg-danger"
+                                class="col-lg-6 text-center text-black rounded bg-danger"
                                 style='font-size: 20px; font-weight: 500; '>
                                 <span id=''>PARADAS</span>
                                 <br>
@@ -219,7 +243,7 @@
                                 <span id='spanParadasHeaderModal'>0 Parada - 0 Produtos - 0 Minutos</span>
                             </div>
                             <div id='divHeaderModalMicro' onclick='getMicro()'
-                                class="col-md-6 text-center text-black rounded bg-warning"
+                                class="col-lg-6 text-center text-black rounded bg-warning"
                                 style='font-size: 20px; font-weight: 500;'>
                                 <span id=''>MICRO PARADAS</span>
                                 <br>
@@ -231,7 +255,7 @@
 
                         <div class="row m-1 pt-2">
 
-                            <div class="col-md-4 ">
+                            <div class="col-lg-4 ">
                                 <div class='rounded p-2 text-center'
                                     style="background-color:#E8E8E8; font-size: 25px; font-weight: 700;">
                                     <span id='spanParadaEstacao'>Estação: </span>
@@ -259,7 +283,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-8 p-2">
+                            <div class="col-lg-8 p-2">
                                 <div id="div_btnCopiar" class="col-lg-12">
                                     <div class="form-group">
 
@@ -393,11 +417,11 @@
 
 
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-lg-6">
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 
                                 </div>
-                                <div class="col-md-6"><button type="button" onclick='inserirDivisao()'
+                                <div class="col-lg-6"><button type="button" onclick='inserirDivisao()'
                                         class="btn btn-success">Salvar</button></div>
                             </div>
                         </div>
@@ -444,12 +468,12 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label style='font-weight: bold; font-size: 20px;'>Maquina: </label>
-                                    <select id='selectMachine' style='font-weight: bold;' class="form-control">
+                                    <select id='selectMachine' style='font-weight: bold;' class="form-control" required>
                                         <option value="Selecione">Selecione: </option>
-                                        <option value="Selecione">Maquina W </option>
-                                        <option value="Selecione">Maquina X </option>
-                                        <option value="Selecione">Maquina Y </option>
-                                        <option value="Selecione">Maquina Z </option>
+                                        <option value="1">Maquina W </option>
+                                        <option value="2">Maquina X </option>
+                                        <option value="3">Maquina Y </option>
+                                        <option value="4">Maquina Z </option>
 
                                     </select>
                                 </div>
@@ -458,8 +482,8 @@
                                 <div class="form-group">
                                     <label style='font-weight: bold; font-size: 20px;'>Data/Hora</label>
                                     <div class='input-group date' id='datetimepicker2'>
-                                        <input id='inputDateScrap' type='text' class="form-control"
-                                            autocomplete="off" />
+                                        <input id='inputDateScrap' type='text' class="form-control" autocomplete="off"
+                                            required />
                                         <span class="input-group-addon">
                                             <span class="fa fa-calendar"></span>
                                         </span>
@@ -471,7 +495,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label style='font-weight: bold; font-size: 20px;'>Codigo do Produto: </label>
-                                    <select class="form-control" name="SKU-scrap" id="selectProduct">
+                                    <select class="form-control" name="SKU-scrap" id="selectProduct" required>
                                         <option value="Selecione">Selecione</option>
                                         <option value="1">KHWS0243A - Ryzen3</option>
                                         <option value="2">LHWS0243B - Ryzen5</option>
@@ -486,14 +510,14 @@
                                 <div class="form-group">
                                     <label style='font-weight: bold; font-size: 20px;'>Quantidade: </label>
                                     <input id='amount-scrap-input' style='font-weight: bold;' class="form-control"
-                                        min="1" type="number">
+                                        min="1" type="number" required>
                                 </div>
                             </div>
                             <div id='serial-number-div' style="display: none;" class="col-lg-6 ">
                                 <div class="form-group">
                                     <label style='font-weight: bold; font-size: 20px;'>Numero Serial: </label>
                                     <input id='serial-number-input' style='font-weight: bold;' class="form-control"
-                                        type="text" disabled>
+                                        type="text" required disabled>
                                 </div>
                             </div>
                         </div>
@@ -545,11 +569,11 @@
 
 
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-lg-6">
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 
                                 </div>
-                                <div class="col-md-6"><button type="button" onclick='saveNewScrap()'
+                                <div class="col-lg-6"><button type="button" onclick='saveNewScrap()'
                                         class="btn btn-success">Salvar</button></div>
                             </div>
                         </div>
@@ -598,11 +622,11 @@
 
 
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-lg-6">
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 
                                 </div>
-                                <div class="col-md-6"><button type="button" onclick='salvarSKU()'
+                                <div class="col-lg-6"><button type="button" onclick='salvarSKU()'
                                         class="btn btn-success">Salvar</button></div>
                             </div>
                         </div>

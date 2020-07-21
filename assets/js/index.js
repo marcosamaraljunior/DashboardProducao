@@ -1,6 +1,6 @@
 const currentDate = moment(new Date()).format('DD/MM');
 
-var oee = [77, 80, 85, 83, 85, 87, 90, 88, 85, 83, 80, 83, 84, 87, 90, 91, 95, 94, 96, 98, 94, 93, 89];
+var oee = [55, 57, 59, 62, 65, 77, 80, 85, 83, 85, 87, 90, 88, 85, 83, 80, 83, 84, 87, 90, 91, 95, 94, 96, 98, 94, 93, 89];
 
 var tipoVisao, idItemOrg, estacaoParada
 var dataParada
@@ -18,26 +18,10 @@ var listaInfoHeader, listaTurnosAnteriores, listaTurnoAtual, listaParadas, lista
 
 let counter = 0;
 
-OEESimulator = async function () {
-
-    await oee.forEach((oee, i) => {
-        setTimeout(() => {
-            $("#OEE-text").html(`OEE : ${oee}%`)
-        }, i * 3000);
-    });
-    setTimeout(() => {
-        OEESimulator();
-    }, 3000 * oee.length);
-
-}
-
 $(function () {
 
 
     OEESimulator();
-
-
-
 
     $('#datetimepicker1').datetimepicker({
         // format: 'DD/MM/YYYY HH:mm:ss'
@@ -662,9 +646,10 @@ function buildProductScrap() { // REFERENTE AO MODAL DE SCRAP
     resetScrapModal()
     $('#div_apontamentoSerial').removeClass('btn-info').addClass('btn-secondary');
     $('#div_apontamentoSKU').removeClass('btn-secondary').addClass('btn-info');
-    $('#inputSerialApontamento, #serial-number-div').attr('disabled', true)
+
+    $('#serial-number-input, #serial-number-div').attr('disabled', true)
     $('#amount-div, #inputQuantidadeScrap').removeClass('hide').attr('disabled', false);
-    $('#selectSKUScrap').attr('disabled', false);
+    $('#selectProduct').attr('disabled', false);
     $("#amount-div").show()
     $("#serial-number-div").hide()
 
@@ -674,27 +659,26 @@ function buildSerialNumberScrap() { // REFERENTE AO MODAL DE SCRAP
     $('#div_apontamentoSKU').removeClass('btn-info').addClass('btn-secondary');
     $('#div_apontamentoSerial').removeClass('btn-secondary').addClass('btn-info');
 
-    $('#serial-number-div, #inputSerialApontamento, #labelExiste').removeClass('hide').attr('disabled', false)
-    $('#selectSKUScrap').attr('disabled', true).val('Selecione');
-    $('#labelExiste').html('Numero serial inexistente').addClass('text-danger').removeClass('text-success');
-    $('#serial-number-div').show();
-    $("#amount-div").hide()
+    $('#selectProduct').attr('disabled', true).val('Selecione');
+    $('#serial-number-div, #serial-number-input').show().attr('disabled', false)
+    $('#amount-scrap-input, #amount-div').attr('disabled', true).hide()
 
 }
 
 function saveNewScrap() {
-    const amountScrap = parseInt($("#amount-scrap-input").val());
-    const currentScraps = parseInt($('#scrap-text').html().substring(8, 9));
-    const totalScraps = currentScraps + amountScrap
-    Swal.fire({
-        position: 'top-middle',
-        icon: 'success',
-        title: 'Salvo com sucesso',
-        showConfirmButton: false,
-        timer: 1500
-    })
-    $('#scrap-modal').modal('toggle');
-    $('#scrap-text').html(`SCRAP : ${totalScraps} `);
+    if (!validateEmptyRequiredFields('scrap-modal')) {
+        Swal.fire("", "Preencha os campos corretamente", "error")
+        return
+    } else {
+
+        const amountScrap = $("#amount-scrap-input").is(":enabled") ? parseInt($("#amount-scrap-input").val()) : 1;
+        const currentScraps = parseInt($('#scrap-text').html().substring(8, 9));
+
+        Swal.fire('', 'Salvo com sucesso', 'success');
+        $('#scrap-text').html(`SCRAP : ${currentScraps + amountScrap} `);
+        $('#scrap-modal').modal('toggle');
+
+    }
 
 }
 
@@ -733,7 +717,7 @@ function montarTotalDia() {
 function resetScrapModal() {
 
     $('#selectMachine, #selectProduct, #scrapReason1, #scrapReason2').val('Selecione');
-    $('#inputDateScrap, #amount-scrap-input, #serial-number-input, #scrap-comment').val('');
+    $('#amount-scrap-input, #serial-number-input, #scrap-comment').val('');
     $('#inputDateScrap').val(new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" }));
     $('#scrapReason2').attr('disabled', true);
 
@@ -770,9 +754,44 @@ function verificarBotaoProximo() {
     }
 }
 
-function verificaSelectsInvalidos(modal) {
-    let valoresDosSelects = $('#' + modal + ' select:enabled').map(function () { return $(this).val() }).get();
+function validateEmptyRequiredFields(modal) {
+    const filledFields = $('#scrap-modal input,#scrap-modal textarea,#scrap-modal select')
+        .filter('[required]:visible:enabled')
+        .map(function () { return $(this).val() })
+        .get();
+
+    return (filledFields.includes('Selecione') || filledFields.includes('')) ? false : true
+}
 
 
-    return (valoresDosSelects.includes('Selecione')) ? true : false
+OEESimulator = function () {
+
+    oee.forEach((oee, i) => {
+        setTimeout(() => {
+            $("#OEE-text").html(`OEE : ${oee}%`)
+            console.log(oee);
+            colorOveralEquipmentEficience(oee);
+        }, i * 3000);
+    });
+    setTimeout(() => {
+        OEESimulator();
+    }, 3000 * oee.length);
+
+}
+
+
+function colorOveralEquipmentEficience(oee) {
+
+
+    if (oee < 90 && oee > 75) {
+        $("#oee-status-circle").css({ 'background-color': '#FFFF00' })
+        $("#oee-status-circle").removeClass('flash');
+    } else if (oee < 75) {
+        $("#oee-status-circle").css({ 'background-color': '#ED2939' })
+        $("#oee-status-circle").addClass('flash');
+    } else {
+        $("#oee-status-circle").css({ 'background-color': '#2e956e' })
+        $("#oee-status-circle").removeClass('flash');
+    }
+
 }
