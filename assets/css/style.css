@@ -7,7 +7,7 @@
 #oee-status-circle{
     position: absolute;
     border-radius: 50%;
-    width: 50vw;
+    width: 2.5vw;
     height: 2.5vw;
     top: 25%;
     left: 85%;
@@ -16,17 +16,18 @@
 #previous-shifts thead{
     background-color: #0ABDA0;
     font-weight: bold;
-    font-size: 2vw;
+    font-size: 25px;
 }
 #previous-shifts thead th{
     padding: 0px !important;
     color: white;
-    border: black 1px solid;
+      border: black 1px solid !important;
+    font-size: 20px;
 }
 #previous-shifts td{
     padding: 0px !important;
     color: black;
-    font-size: 1.3vw;
+    font-size: 25px;
     font-weight: bold;
     border: none;
 }
@@ -36,6 +37,7 @@
     font-weight: bold;
     font-size: 1vw;
     color: black !important;
+
     
 }
 .th-plan{
@@ -57,11 +59,22 @@ body{
 
 #current-shift table{
     text-align: center;
-    border: black 1px solid;
+    /* border: black 1px solid; */
     padding: 0px !important;
+}
+#current-shift table td{
+    text-align: center;
+    border: black 1px solid;
+    font-weight: bold;
+    
 }
 #current-shift table th{
     text-align: center;
+    border: black 1px solid;
+    font-size: 25px;
+}
+#current-shift table .td-cause{
+    background-color: lightgray;
     border: black 1px solid;
 }
 
@@ -87,4 +100,22 @@ body{
     100%{
         background-color: #e52325;
     }
+}
+
+.stoppage-card{
+    background-color: red;
+    border-radius: 50%;
+}
+.minor-stoppage-card{
+    background-color: #ffea00;
+    border-radius: 50%;
+}
+
+#next-stoppage-btn, #previous-stoppage-btn{
+    height: 50px;
+    width: 150px;
+}
+
+.selected-stoppage-type{
+    border: 5px solid black;
 }

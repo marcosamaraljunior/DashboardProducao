@@ -422,225 +422,6 @@ function montarModalProduto(produto) {
 
 }
 
-function montarInfoHeader(listaInfoHeader, callback) {
-
-    listaInfoHeader.map((info) => {
-
-        $('#divAYInfo').css('background-color', info.AY_cor).css('color', info.AY_cor_fonte);
-        $('#divFPYInfo').css('background-color', info.FPY_cor).css('color', info.FPY_cor_fonte);
-        //  $('#textSKUInfo').css({ 'font-size': '50px', 'font-weight': 'bold' });
-        $('#textAYInfo, #textFPYInfo').css({ 'font-size': '90px', 'font-weight': 'bold' });
-
-        $('#textItemOrgInfo').html(info.ItemNome)
-
-
-        $('#textSKUInfo').html(info.SKU)
-
-        // $.when($('#textItemOrgInfo').html(info.ItemNome)).then(function () {
-        //     resize_to_fit('divItemOrgInfo', 'textItemOrgInfo')
-        // });
-        // $.when($('#textSKUInfo').html(info.SKU)).then(function () {
-        //     resize_to_fit('divSKUInfo', 'textSKUInfo')
-        // });
-
-
-
-        switch (tipoVisao) {
-            case 'LINHA':
-                $('#textAYInfo').html('AY: ' + info.AY_valor + '%')
-                $('#textFPYInfo').html('FPY: ' + info.FPY_valor + '%');
-
-                break;
-            case 'FLUXO':
-                $('#textAYInfo').html('OLE: ' + info.AY_valor + '%')
-                $('#textFPYInfo').html('SCRAP: ' + info.FPY_valor)
-                if (userPermitido() == true) {
-                    $('#divFPYInfo').attr({ 'data-toggle': 'modal', 'data-target': '#modalScrap' });
-                    $('#divSKUInfo').attr({ 'data-toggle': "modal", 'data-target': "#modalSKU" });
-                }
-                break;
-            case 'MAQUINA':
-                $('#textAYInfo').html('OEE: ' + info.AY_valor + '%')
-                $('#textFPYInfo').html('SCRAP: ' + info.FPY_valor)
-                if (userPermitido() == true) {
-
-                    $('#divFPYInfo').attr({ 'data-toggle': 'modal', 'data-target': '#modalScrap' });
-                    $('#divSKUInfo').attr({ 'data-toggle': "modal", 'data-target': "#modalSKU" });
-                }
-                break;
-
-            default:
-                break;
-        }
-    })
-    callback();
-}
-
-function montarTurnosAnteriores(listaTurnosAnteriores, callback) {
-    $('#tabelaTurno1 tbody').html(" ")
-    $('#tabelaTurno2 tbody').html(" ")
-    $('#tabelaTurno3 tbody').html(" ")
-    $('#tabelaTurno4 tbody').html(" ")
-
-    let corBackGround = '';
-    let campoTurno = 1;
-
-
-    listaTurnosAnteriores.map((info) => {
-        let cardParada = '';
-        let cardMicro = '';
-
-
-
-        if (moment(info.data).format('DD/MM') == currentDate) {
-            corBackGround = '#012f60';
-            $('#tabelaTurno' + campoTurno).addClass('hoje');
-        } else {
-            corBackGround = 'gray'
-        }
-
-        switch (info.temParadaInt) {
-            case "1":
-                cardParada = `<div class="col-sm-3" style='border-radius: 5px; background-color: red'></div>`
-
-                break;
-            case "2":
-                cardParada = `<div class="col-sm-3" style='border-radius: 5px; background-color: red'></div>`
-
-                break;
-            default:
-                cardParada = '<div class="col-sm-3"></div>'
-                break;
-        }
-
-        let linha = `<tr>
-            <td>${info.capacidadeTotal}</td>
-            <td>${info.capaciReal}</td>
-            <td>${info.prodMeta}</td>
-            <td>${info.diferenca}</td>
-            <td>${info.prodReal}</td>
-        </tr>`;
-
-
-
-        $('#tituloTabelaTurno' + campoTurno).html(`
-        <div class='row'>
-            <div class='col-sm-2'> </div>   
-            <div class='col-sm-8'>${info.nomeTurno.toUpperCase()} - ${info.data == '1900-01-01T00:00:00' ? '' : moment(info.data).format('DD/MM')}</div>
-            <div class='col-sm-1 m-0 p-0'></div>
-            <div class='col-sm-1 m-0 p-0'>
-                <div class='row m-0' style='height:100%'>
-                <div class="col-sm-3 mr-1"></div>
-                ${cardParada}
-
-                
-                </div>
-
-        </div>
-
-  
-        </div>
-        </div>
-        `).css('background-color', corBackGround)
-        $('#tabelaTurno' + campoTurno + ' tbody').append(linha);
-        campoTurno += 1;
-    })
-    $('.divTable td').css({ 'font-size': '25px', 'border': '2px solid #F8F8F8', 'padding': '0' })
-    $('.divTable th').css({ 'font-size': '25px', 'border': '2px solid #F8F8F8' });
-    $('.tituloAnteriores').css('font-size', '25px')
-
-    $('#tituloTabelaTurno1,#tituloTabelaTurno2,#tituloTabelaTurno3,#tituloTabelaTurno4').off()
-
-
-    for (let i = 1; i < 5; i++) {
-        $('#tituloTabelaTurno' + i).on('click', function () {
-            refereTurnoAnterior = true;
-            let parada = listaTurnosAnteriores[i - 1]
-            getDadosParadas(parada.temParada, parada.data, parada.horaFim, parada.classificacaoParada);
-        })
-    }
-
-    callback();
-}
-
-function montarTurnoAtual(listaTurnoAtual, callback) {
-
-    $('#turno_atual tbody').html('');
-    $('#tituloTurnoAtual').html(`${listaTurnoAtual[0].nomeTurno.toUpperCase()} - ${moment(listaTurnoAtual[0].dataInicial).format('DD/MM')}`)
-    listaTurnoAtual.map((info) => {
-        let cardMicro = '';
-        let cardParada = '';
-        switch (info.temParadaInt) {
-            case "1":
-                cardParada = `<div class="col-sm-4  mr-1 " style='border-radius: 5px; background-color: red'></div>`
-                break;
-            case '2':
-                cardParada = `<div class="col-sm-4  mr-1 " style='border-radius: 5px; background-color: red'></div>`
-                cardMicro = `<div class="col-sm-4 bg-warning" style='border-radius: 5px'></div>`
-
-                break;
-            case "3":
-                cardParada = '<div class="col-sm-4  mr-1"></div>'
-                cardMicro = `<div class="col-sm-4 bg-warning" style='border-radius: 5px'></div>`
-
-                break;
-
-            default:
-                break;
-        }
-
-        info.corBack = info.horaInicio.trim() == 'Total' ? 'white' : info.corBack; // GAMBIARRA ADICIONAL
-
-
-
-        let linha =
-            `<tr style='height: 30px !important'>
-            <td class='info'>${info.horaInicio}${info.horaFim}</td>
-            <td class='info'>${info.capacidadeTotal}</td>
-            <td class='info'>${info.capaciReal}</td>
-            <td class='info'>${info.prodMeta}</td>
-            <td class='info' style='background-color: ${info.corBack}; color: ${info.corFonte} !important'>${info.diferenca}</td>
-            <td class='info'>${info.prodReal}</td>
-            <td class='p-1 causa' style='display:block;;height:60px; font-size: 31px; border-radius: 10px;background-color: #D8D8D8;' onclick='getDadosParadas(${info.temParada}, "${info.dataInicial}", "${info.horaFim}", ${info.classificacaoParada})'> 
-            <div class='row causadiv' style='height: 100%'>
-                <div class='col-sm-11' ><span class='obs' >${info.observacaoDash}</span></div>
-                <div class='col-sm-1 p-0'>
-                    <div class="row m-0" style='height: 100%'>
-                        ${cardParada}
-                        ${cardMicro}
-                    </div>
-                </div>
-            </div>
-            </td>
-            </tr>`;
-
-        $('#turno_atual tbody').append(linha);
-
-
-
-    })
-
-    $('#turno_atual tbody tr:last .causa').css('color', 'Darkblue').css({ 'background-color': 'white', 'border-radius': '0px' }).html('')
-    $(`#turno_atual tbody tr:eq(${$(`#turno_atual tbody tr`).length - 1}) .causa`).css({ 'background-color': 'white !important', 'border-radius': '0px' }).html('');
-
-
-
-    callback();
-    // resize_to_fit('.causa', '.observacao');
-}
-
-function refit_obseracao() {
-    $('.causadiv').each(function () {
-        var fontsize = $(this).children().children().first().css('font-size');
-        let paiHeight = $(this).height();
-        let paiWidth = $(this).width();
-
-        while (paiHeight <= $(this).children().children().first().height() - 20 || paiWidth <= $(this).children().children().first().width()) {
-            $(this).children().children().first().css('fontSize', parseFloat(fontsize) - 3);
-            fontsize = $(this).children().children().first().css('font-size');
-        }
-    })
-}
 
 function buildProductScrap() { // REFERENTE AO MODAL DE SCRAP
     resetScrapModal()
@@ -666,19 +447,14 @@ function buildSerialNumberScrap() { // REFERENTE AO MODAL DE SCRAP
 }
 
 function saveNewScrap() {
-    if (!validateEmptyRequiredFields('scrap-modal')) {
-        Swal.fire("", "Preencha os campos corretamente", "error")
-        return
-    } else {
+    if (validateEmptyRequiredFields('scrap-modal') == "invalid") return
 
-        const amountScrap = $("#amount-scrap-input").is(":enabled") ? parseInt($("#amount-scrap-input").val()) : 1;
-        const currentScraps = parseInt($('#scrap-text').html().substring(8, 9));
+    const amountScrap = $("#amount-scrap-input").is(":enabled") ? parseInt($("#amount-scrap-input").val()) : 1;
+    const currentScraps = parseInt($('#scrap-text').html().substring(8));
 
-        Swal.fire('', 'Salvo com sucesso', 'success');
-        $('#scrap-text').html(`SCRAP : ${currentScraps + amountScrap} `);
-        $('#scrap-modal').modal('toggle');
-
-    }
+    Swal.fire('', 'Salvo com sucesso', 'success');
+    $('#scrap-text').html(`SCRAP : ${currentScraps + amountScrap} `);
+    $('#scrap-modal').modal('toggle');
 
 }
 
@@ -693,22 +469,6 @@ function montarselectMachineScrap() { // ESTE E O UNICO SELECT QUE FOI MONTADO S
     })
 }
 
-function montarTotalDia() {
-    let totalDia = calcularTotalDia();
-
-    let linha = `< tr >
-    <td class='info'>Total Dia</td>
-    <td class='info'>${totalDia.totalCap}</td>
-    <td class='info'>${totalDia.TotaldifCapacidade}</td>
-    <td class='info'>${totalDia.totalProdPlan}</td>
-    <td class='info'>${totalDia.totalDifPlan}</td>
-    <td class='info'>${totalDia.totalProdReal}</td>
-        </tr > `;
-
-    $('#turno_atual tbody').append(linha);
-    $('#turno_atual tbody tr:last .info').css('color', 'Darkblue');
-    $(`#turno_atual tbody tr: eq(${$(`#turno_atual tbody tr`).length - 2}) .info`).css('color', 'Royalblue')
-}
 
 //  =================================================================================================================================
 //  -#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# FUNCS DE MANUTENCAO -#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
@@ -760,17 +520,20 @@ function validateEmptyRequiredFields(modal) {
         .map(function () { return $(this).val() })
         .get();
 
-    return (filledFields.includes('Selecione') || filledFields.includes('')) ? false : true
+    if (filledFields.includes('Selecione') || filledFields.includes('')) {
+        Swal.fire("", "Preencha os campos corretamente", "error")
+        return "invalid";
+    } else {
+        return "valid"
+    }
 }
-
 
 OEESimulator = function () {
 
     oee.forEach((oee, i) => {
         setTimeout(() => {
             $("#OEE-text").html(`OEE : ${oee}%`)
-            console.log(oee);
-            colorOveralEquipmentEficience(oee);
+            setOEEColor(oee);
         }, i * 3000);
     });
     setTimeout(() => {
@@ -779,12 +542,10 @@ OEESimulator = function () {
 
 }
 
-
-function colorOveralEquipmentEficience(oee) {
-
+function setOEEColor(oee) {
 
     if (oee < 90 && oee > 75) {
-        $("#oee-status-circle").css({ 'background-color': '#FFFF00' })
+        $("#oee-status-circle").css({ 'background-color': '#ffd500' })
         $("#oee-status-circle").removeClass('flash');
     } else if (oee < 75) {
         $("#oee-status-circle").css({ 'background-color': '#ED2939' })
@@ -793,5 +554,4 @@ function colorOveralEquipmentEficience(oee) {
         $("#oee-status-circle").css({ 'background-color': '#2e956e' })
         $("#oee-status-circle").removeClass('flash');
     }
-
 }

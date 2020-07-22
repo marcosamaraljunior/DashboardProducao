@@ -37,7 +37,7 @@
                             </div>
                         </div>
                         <div class="col-lg-3  border border-dark p-0 m-0">
-                            <div id='OEEInfo' class="text-center p-0 row m-0 pl-3" style="position: relative;">
+                            <div id='OEEInfo' class="text-center p-0 row m-0" style="position: relative;">
                                 <span id='OEE-text' class="col-md-11 pl-5"> OEE : 85%</span>
                                 <div class="col-md-1" id="oee-status-circle"></div>
                             </div>
@@ -65,8 +65,8 @@
                                             <th id='tile-previous-shift1' colspan='5'> Turno W</th>
                                         </tr>
                                         <tr>
-                                            <th class='th-capacity p-0' '>Cap 100%</th>
-                                            <th class=' th-capacity p-0' '>Dif Cap 100%</th>
+                                            <th class='th-capacity p-0'>Cap 100%</th>
+                                            <th class=' th-capacity p-0'>Dif Cap 100%</th>
                                             <th class=' th-plan p-0'>Prod Plan</th>
                                             <th class='th-plan p-0'>Dif Plan</th>
                                             <th class='th-real p-0'>Prod Real</th>
@@ -182,8 +182,8 @@
 
         <section id="current-shift">
             <div class="p-0">
-                <table class="table table-sm table-hover " style='font-size: 30px' id="turno_atual">
-                    <thead class="titulo-table">
+                <table class="table table-sm table-hover " style='font-size: 30px' id="current-shift-table">
+                    <thead>
                         <tr>
                             <th colspan='7' id='current-shift-title' class='text-white'
                                 style='background-color: #0ABDA0 !important'>
@@ -199,241 +199,115 @@
                             <th class="th-real">Prod Real</th>
 
 
-                            <th style="width:50%; background-color: #2E303E" class="text-white">Causas</th>
+                            <th style="width:50%; background-color: #2E303E" class="text-white">Parada Principal</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                            <td>10:00 - 11:00</td>
+                            <td>2300</td>
+                            <td>-500</td>
+                            <td>2000</td>
+                            <td>-200</td>
+                            <td>1800</td>
+                            <td class="td-cause">
+                                <div class="row m-0">
+                                    <div class="col-11">
+                                        <span>Danificado - Amassado</span>
+                                    </div>
+                                    <div class="col-1 p-0 d-none d-md-block">
+                                        <div class="row m-0 pt-2 pb-2" style="height: 100%;">
 
+                                            <div class=" col-sm-3 align-content-center offset-1">
+                                            </div>
+                                            <div class=" flash stoppage-card col-sm-3 align-content-center mr-1"
+                                                data-toggle="modal" data-target="#justify-modal">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>11:00 - 12:00</td>
+                            <td>2300</td>
+                            <td>-500</td>
+                            <td>2000</td>
+                            <td>-200</td>
+                            <td>1800</td>
+                            <td class="td-cause">
+                                <div class="row m-0">
+                                    <div class="col-11">
+                                        <span>Danificado - Arranhado</span>
+                                    </div>
+                                    <div class="col-1 p-0 d-none d-md-block">
+                                        <div class="row m-0 pt-2 pb-2" style="height: 100% !important;">
+                                            <div class="col-sm-3 offset-1 align-content-center ">
+                                            </div>
+                                            <div class="minor-stoppage-card col-sm-3 align-content-center mr-1">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>12:00 - 13:00</td>
+                            <td>2300</td>
+                            <td>-500</td>
+                            <td>2000</td>
+                            <td>-200</td>
+                            <td>1800</td>
+                            <td class="td-cause">
+                                <div class="row m-0">
+                                    <div class="col-11">
+                                        <span>Incorreto - Solda</span>
+                                    </div>
+                                    <div class="col-1 p-0 d-none d-md-block">
+                                        <div class="row m-0 pt-2 pb-2" style="height: 100%;">
+                                            <div class="col-sm-3 offset-1 align-content-center ">
+                                            </div>
+                                            <div class="minor-stoppage-card col-sm-3 align-content-center mr-1">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>13:00 - 14:00</td>
+                            <td>2300</td>
+                            <td>-500</td>
+                            <td>2000</td>
+                            <td>-200</td>
+                            <td>1800</td>
+                            <td class="td-cause">
+                                <div class="row m-0">
+                                    <div class="col-11">
+                                        <span>Incorreto - Torto </span>
+                                    </div>
+                                    <div class="col-1 p-0 d-none d-md-block">
+                                        <div class="row m-0 pt-2 pb-2" style="height: 100%;">
+                                            <div class="flash stoppage-card col-sm-3 offset-1 align-content-center ">
+                                            </div>
+                                            <div class="minor-stoppage-card col-sm-3 align-content-center mr-1">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </section>
     </main>
 
-    <section id="justify-section">
-        <div class="modal" id="justify-modal">
-            <div class="modal-dialog modal-lg" style="height:600px; width:1200; max-width:1360px">
-                <div class="modal-content">
-                    <!--  -------------------------------------------------- -->
-                    <div class="modal-header" style="background-color: #012f60">
-                        <a id=" default_home" class="logo blue-bg">
-                            <span class="logo-lg">
-                                <img src="" alt="">
-                            </span>
-                        </a>
-                        <h4 class="modal-title" style="font-size: 26px; color: white; font-weight: bold;">
-                            Escolha o Motivo
-                            <span id=""></span> <span id="" class="texto-preto-modal"></span>
-                        </h4>
-                        <button type="button" class="close" data-dismiss="modal"
-                            style="color: white;font-size: 36px;">&times;
-                        </button>
-                    </div>
-                    <!--  -------------------------------------------------- -->
-                    <div class="modal-body">
-
-                        <div class="row mr-1 ml-1 mb-0">
-                            <div id='divHeaderModalParada' onclick='getParada()'
-                                class="col-lg-6 text-center text-black rounded bg-danger"
-                                style='font-size: 20px; font-weight: 500; '>
-                                <span id=''>PARADAS</span>
-                                <br>
-                                <span id='spanTempoHeaderModal'>8:00 - 10:00</span>
-                                <br>
-                                <span id='spanParadasHeaderModal'>0 Parada - 0 Produtos - 0 Minutos</span>
-                            </div>
-                            <div id='divHeaderModalMicro' onclick='getMicro()'
-                                class="col-lg-6 text-center text-black rounded bg-warning"
-                                style='font-size: 20px; font-weight: 500;'>
-                                <span id=''>MICRO PARADAS</span>
-                                <br>
-                                <span id='spanTempoHeaderModalMicro'>8:00 - 10:00</span>
-                                <br>
-                                <span id='spanMicroHeaderModal'>0 Parada - 0 Produtos - 0 Minutos</span>
-                            </div>
-                        </div>
-
-                        <div class="row m-1 pt-2">
-
-                            <div class="col-lg-4 ">
-                                <div class='rounded p-2 text-center'
-                                    style="background-color:#E8E8E8; font-size: 25px; font-weight: 700;">
-                                    <span id='spanParadaEstacao'>Estação: </span>
-                                    <hr>
-                                    <span id='spanParadasRestantes'>Paradas nao justificadas: 0</span>
-                                    <hr>
-                                    <span id='spanParada'>Parada X</span>
-                                    <hr>
-                                    <span id='spanHorarioParada'>Horário: </span>
-                                    <br>
-                                    <hr>
-                                    <span>Justificada: <i id='iconeJustificada' class="fa fa-close fa-1x"
-                                            style="color: red"> </i></span>
-                                </div>
-                                <br>
-                                <div class='text-center'>
-                                    <button data-direction="" id="btnVoltarModalParada" onclick=""
-                                        class="btn btn-whirlpool btnModal" style="color: white;margin-right: 50px;">
-                                        <i class="fa fa-arrow-left fa-3x fa-lg"></i> Anterior
-                                    </button>
-                                    <button data-direction="" id="btnAvancarModalParada"
-                                        class="btn btn-whirlpool btnModal" style="color: white">
-                                        <span>Próximo <i class="fa fa-arrow-right fa-3x fa-lg"></i></span>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-8 p-2">
-                                <div id="div_btnCopiar" class="col-lg-12">
-                                    <div class="form-group">
-
-                                        <button onclick="manterUltimoSelect()" class="btn btn-info">
-                                            Copiar ultima justificativa
-                                        </button>
-                                    </div>
-                                </div>
-                                <div id="div_dplOrigem" class="col-lg-12">
-                                    <div class="form-group">
-                                        <label style='font-weight: bold; font-size: 20px;' for="dplNivel1"
-                                            id="origem">Origem</label>
-                                        <select class="form-control" id="dplOrigem" required>
-
-                                        </select>
-                                    </div>
-                                </div>
-                                <div id="div_dplNivel1" class="col-lg-12">
-                                    <div class="form-group">
-                                        <label style='font-weight: bold; font-size: 20px;' for="dplNivel1"
-                                            id="motivoNv1">Motivo Nivel 1</label>
-                                        <select class="form-control" id="dplNivel1" required>
-
-                                        </select>
-                                    </div>
-                                </div>
-                                <div id="div_dplNivel2" class="col-lg-12 hide">
-                                    <div class="form-group">
-                                        <label style='font-weight: bold; font-size: 20px;' for="dplNivel2"
-                                            id="motivoNv2">Motivo Nivel 2</label>
-                                        <select class="form-control" id="dplNivel2" required disabled>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div id="div_dplNivel3" class="col-lg-12 hide">
-                                    <div class="form-group">
-                                        <label style='font-weight: bold; font-size: 20px;' for="dplNivel3"
-                                            id="motivoNv3">Motivo Nivel 3</label>
-                                        <select class="form-control" id="dplNivel3" required disabled>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div id="div_dplNivel4" class="col-lg-12 hide">
-                                    <div class="form-group">
-                                        <label style='font-weight: bold; font-size: 20px;' for="dplNivel4"
-                                            id="motivoNv4">Motivo Nivel 4</label>
-                                        <select class="form-control" id="dplNivel4" required disabled>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div id="div_comentario" class="col-lg-12">
-                                    <div class="form-group">
-                                        <label id='labelComentario' style='font-weight: bold; font-size: 20px;'
-                                            for="comentario">Comentario:</label>
-
-                                        <textarea class="form-control" id="comentario" rows="4" cols="50"
-                                            maxlength="499" pattern="[a-zA-Z0-9]+"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-                        </div>
-
-                        <!--  -------------------------------------------------- -->
-                        <div class="modal-footer">
-
-                            <div class="footerLeft mr-auto" style="float: left">
-                                <div class="" id="div_btnPausas">
-                                    <p style="font-size: 18px" class="" id="pPausas">Pausas</p>
-                                    <p id="fTbuttons"></p>
-
-                                </div>
-                            </div>
-
-
-                            <button type="button" id='btnModalDivisoes' class="btn btn-success mr-5" data-toggle="modal"
-                                data-target="#modalDivisaoParadas">Dividir Parada</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="button" onclick='salvarJustificativa()' class="btn btn-">Salvar</button>
-
-                        </div>
-                        <!--  -------------------------------------------------- -->
-                    </div>
-                </div>
-            </div>
-    </section>
-
-    <section id="SectionModalDivisaoParadas">
-        <div class="modal" id="modalDivisaoParadas">
-            <div class="modal-dialog modal-md">
-                <div class="modal-content">
-
-                    <div class="modal-header text-center" style="background-color: #012f60">
-
-                        <h2 class='modal-title text-white' style="font-size: 26px; font-weight: bold;">Dividir Parada
-                        </h2>
-                        <button type="button" class="close" data-dismiss="modal"
-                            style="color: white;font-size: 36px;">&times;
-                        </button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <div class='rounded p-2 text-center'
-                            style="background-color:#E8E8E8; font-size: 25px; font-weight: 700;">
-                            <span id='spanParada'>Parada</span>
-                            <hr>
-                            <span id='spanHorarioDivisaoParada'>Horário: </span>
-                            <br>
-                            <hr>
-                            <fieldset class="form-group">
-                                <h4 class="text-black">Horario de Divisao: </h4>
-                                <div class='input-group date' id='datetimepicker1' autocomplete="off">
-                                    <input id='inputDivisao' type='text' class="form-control" />
-                                    <span class="input-group-addon">
-                                        <span class="fa fa-calendar"></span>
-                                    </span>
-                                </div>
-
-                            </fieldset>
-
-
-                        </div>
-                    </div>
-
-
-
-                    <div class="modal-footer ">
-                        <div class="justify-content-center " style="float: center">
-
-
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-
-                                </div>
-                                <div class="col-lg-6"><button type="button" onclick='inserirDivisao()'
-                                        class="btn btn-success">Salvar</button></div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
-    </section>
-
+    <!-- MISSING TIMEPICKER -->
     <section id='scrap-section'>
         <div class="modal fade" id="scrap-modal">
             <div class="modal-dialog modal-lg" style="height:600px; width:1200; max-width:1360px">
@@ -583,6 +457,196 @@
 
             </div>
         </div>
+    </section>
+
+    <!-- DONE -->
+
+    <section id="justify-section">
+        <div class="modal" id="justify-modal">
+            <div class="modal-dialog modal-lg" style="height:600px; width:1200; max-width:1360px">
+                <div class="modal-content">
+                    <!--  -------------------------------------------------- -->
+                    <div class="modal-header" style="background-color: #0294A5">
+                        <a id=" default_home" class="logo blue-bg">
+                            <span class="logo-lg">
+                                <img src="" alt="">
+                            </span>
+                        </a>
+                        <h4 class="modal-title" style="font-size: 26px; color: white; font-weight: bold;">
+                            Justificar parada
+                            <span id=""></span> <span id="" class="texto-preto-modal"></span>
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal"
+                            style="color: white;font-size: 36px;">&times;
+                        </button>
+                    </div>
+                    <!--  -------------------------------------------------- -->
+                    <div class="modal-body">
+
+                        <div class="row mr-1 ml-1 mb-0">
+                            <div id='divHeaderModalParada' onclick='getParada()'
+                                class="col-lg-6 text-center text-black rounded bg-danger selected-stoppage-type"
+                                style='font-size: 20px; font-weight: 500; '>
+                                <span id=''>PARADAS</span>
+                                <br>
+                                <span id='spanTempoHeaderModal'>8:00 - 10:00</span>
+                                <br>
+                                <span id='spanParadasHeaderModal'>0 Parada - 0 Produtos - 0 Minutos</span>
+                            </div>
+                            <div id='divHeaderModalMicro' onclick='getMicro()'
+                                class="col-lg-6 text-center text-black rounded bg-warning"
+                                style='font-size: 20px; font-weight: 500;'>
+                                <span id=''>MICRO PARADAS</span>
+                                <br>
+                                <span id='spanTempoHeaderModalMicro'>8:00 - 10:00</span>
+                                <br>
+                                <span id='spanMicroHeaderModal'>0 Parada - 0 Produtos - 0 Minutos</span>
+                            </div>
+                        </div>
+
+                        <div class="row m-1 pt-2">
+
+                            <div class="col-lg-4 ">
+                                <div class='rounded p-2 text-center'
+                                    style="background-color:#E8E8E8; font-size: 25px; font-weight: 700;">
+                                    <span id='spanParadaEstacao'>Estação: </span>
+                                    <hr>
+                                    <span id='spanParadasRestantes'>Paradas nao justificadas: 0</span>
+                                    <hr>
+                                    <span id='spanHorarioParada'>Horário: </span>
+                                    <br>
+                                    <hr>
+                                    <span>Justificada: <i id='iconeJustificada' class="fa fa-close fa-1x"
+                                            style="color: red"> </i></span>
+                                </div>
+
+                                <div class='text-center mt-1'>
+                                    <button id="next-stoppage-btn" class="btn btn-info"
+                                        style="color: white;margin-right: 50px;">
+                                        <i class="fa fa-arrow-left fa-3x fa-lg"></i> Anterior
+                                    </button>
+                                    <button id="previous-stoppage-btn" class="btn btn-info">
+                                        <span>Próxima <i class="fa fa-arrow-right fa-3x fa-lg"></i></span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-8 p-2">
+
+
+                                <div id="div_dplNivel1" class="col-lg-12">
+                                    <div class="form-group">
+                                        <label style='font-weight: bold; font-size: 20px;' for="dplNivel1"
+                                            id="motivoNv1">Motivo Nivel 1</label>
+                                        <select class="form-control" id="dplNivel1" required>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="div_dplNivel2" class="col-lg-12 hide">
+                                    <div class="form-group">
+                                        <label style='font-weight: bold; font-size: 20px;' for="dplNivel2"
+                                            id="motivoNv2">Motivo Nivel 2</label>
+                                        <select class="form-control" id="dplNivel2" required disabled>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="div_comentario" class="col-lg-12">
+                                    <div class="form-group">
+                                        <label id='labelComentario' style='font-weight: bold; font-size: 20px;'
+                                            for="comentario">Comentario:</label>
+
+                                        <textarea class="form-control" id="comentario" rows="4" cols="50"
+                                            maxlength="499" pattern="[a-zA-Z0-9]+"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+
+                        <!--  -------------------------------------------------- -->
+                        <div class="modal-footer p-2">
+
+                            <div class="footerLeft mr-auto" style="float: left">
+                                <button type="button" id='btnModalDivisoes' class="btn btn-info mr-5"
+                                    data-toggle="modal" data-target="#modalDivisaoParadas">Dividir Parada</button>
+                            </div>
+
+
+
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" onclick='salvarJustificativa()'
+                                class="btn btn-success">Salvar</button>
+
+                        </div>
+                        <!--  -------------------------------------------------- -->
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <section id="SectionModalDivisaoParadas">
+        <div class="modal" id="modalDivisaoParadas">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+
+                    <div class="modal-header text-center" style="background-color: #012f60">
+
+                        <h2 class='modal-title text-white' style="font-size: 26px; font-weight: bold;">Dividir Parada
+                        </h2>
+                        <button type="button" class="close" data-dismiss="modal"
+                            style="color: white;font-size: 36px;">&times;
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <div class='rounded p-2 text-center'
+                            style="background-color:#E8E8E8; font-size: 25px; font-weight: 700;">
+                            <span id='spanParada'>Parada</span>
+                            <hr>
+                            <span id='spanHorarioDivisaoParada'>Horário: </span>
+                            <br>
+                            <hr>
+                            <fieldset class="form-group">
+                                <h4 class="text-black">Horario de Divisao: </h4>
+                                <div class='input-group date' id='datetimepicker1' autocomplete="off">
+                                    <input id='inputDivisao' type='text' class="form-control" />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                </div>
+
+                            </fieldset>
+
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="modal-footer ">
+                        <div class="justify-content-center " style="float: center">
+
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+
+                                </div>
+                                <div class="col-lg-6"><button type="button" onclick='inserirDivisao()'
+                                        class="btn btn-success">Salvar</button></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
     </section>
 
     <section id="sectionModalSKU">
