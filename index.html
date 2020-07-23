@@ -473,7 +473,7 @@
                             </span>
                         </a>
                         <h4 class="modal-title" style="font-size: 26px; color: white; font-weight: bold;">
-                            Justificar parada
+                            Justificar Parada
                             <span id=""></span> <span id="" class="texto-preto-modal"></span>
                         </h4>
                         <button type="button" class="close" data-dismiss="modal"
@@ -484,23 +484,23 @@
                     <div class="modal-body">
 
                         <div class="row mr-1 ml-1 mb-0">
-                            <div id='divHeaderModalParada' onclick='getParada()'
+                            <div id='stoppage-div' onclick='buildStoppage()'
                                 class="col-lg-6 text-center text-black rounded bg-danger selected-stoppage-type"
                                 style='font-size: 20px; font-weight: 500; '>
-                                <span id=''>PARADAS</span>
+                                <span>PARADAS</span>
                                 <br>
-                                <span id='spanTempoHeaderModal'>8:00 - 10:00</span>
+                                <span id='stoppage-interval'>8:00 - 10:00</span>
                                 <br>
-                                <span id='spanParadasHeaderModal'>0 Parada - 0 Produtos - 0 Minutos</span>
+                                <span id='stoppage-resume'>0 Parada - 0 Produto(s) - 0 Minutos</span>
                             </div>
-                            <div id='divHeaderModalMicro' onclick='getMicro()'
+                            <div id='minor-div' onclick='buildMinorStoppage()'
                                 class="col-lg-6 text-center text-black rounded bg-warning"
                                 style='font-size: 20px; font-weight: 500;'>
-                                <span id=''>MICRO PARADAS</span>
+                                <span>MICRO PARADAS</span>
                                 <br>
-                                <span id='spanTempoHeaderModalMicro'>8:00 - 10:00</span>
+                                <span id='minor-interval'>8:00 - 10:00</span>
                                 <br>
-                                <span id='spanMicroHeaderModal'>0 Parada - 0 Produtos - 0 Minutos</span>
+                                <span id='minor-resume'>0 Parada - 0 Produto(s) - 0 Minutos</span>
                             </div>
                         </div>
 
@@ -509,9 +509,9 @@
                             <div class="col-lg-4 ">
                                 <div class='rounded p-2 text-center'
                                     style="background-color:#E8E8E8; font-size: 25px; font-weight: 700;">
-                                    <span id='spanParadaEstacao'>Estação: </span>
+                                    <span id='work-station'>Estação: </span>
                                     <hr>
-                                    <span id='spanParadasRestantes'>Paradas nao justificadas: 0</span>
+                                    <span id='amount-not-justyfied'>Paradas nao justificadas: 0</span>
                                     <hr>
                                     <span id='spanHorarioParada'>Horário: </span>
                                     <br>
@@ -537,9 +537,12 @@
                                 <div id="div_dplNivel1" class="col-lg-12">
                                     <div class="form-group">
                                         <label style='font-weight: bold; font-size: 20px;' for="dplNivel1"
-                                            id="motivoNv1">Motivo Nivel 1</label>
-                                        <select class="form-control" id="dplNivel1" required>
-
+                                            id="reason1">Motivo Nivel 1</label>
+                                        <select class="form-control" id="reason1-select" required>
+                                            <option value="0">Selecione</option>
+                                            <option value="1">Pausa</option>
+                                            <option value="2">Falta de Peças</option>
+                                            <option value="3">Manutenção</option>
                                         </select>
                                     </div>
                                 </div>
@@ -547,7 +550,8 @@
                                     <div class="form-group">
                                         <label style='font-weight: bold; font-size: 20px;' for="dplNivel2"
                                             id="motivoNv2">Motivo Nivel 2</label>
-                                        <select class="form-control" id="dplNivel2" required disabled>
+                                        <select class="form-control" id="reason2-select" required disabled>
+                                            <option value="0">Selecione</option>
                                         </select>
                                     </div>
                                 </div>
