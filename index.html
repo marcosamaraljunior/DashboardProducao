@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>TV FPY</title>
+    <title>Dashboard Producao</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="assets/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 
@@ -210,18 +212,19 @@
                             <td>2000</td>
                             <td>-200</td>
                             <td>1800</td>
-                            <td class="td-cause">
+                            <td class="td-cause" data-toggle="modal" data-target="#justify-modal">
                                 <div class="row m-0">
                                     <div class="col-11">
                                         <span>Danificado - Amassado</span>
                                     </div>
                                     <div class="col-1 p-0 d-none d-md-block">
-                                        <div class="row m-0 pt-2 pb-2" style="height: 100%;">
-
-                                            <div class=" col-sm-3 align-content-center offset-1">
+                                        <div class="row m-0 align-content-center" style="height: 100% !important;">
+                                            <div class="col-sm-3 offset-3">
+                                                <div class=" flash stoppage-card ">
+                                                </div>
                                             </div>
-                                            <div class=" flash stoppage-card col-sm-3 align-content-center mr-1"
-                                                data-toggle="modal" data-target="#justify-modal">
+                                            <div class="col-sm-3 align-content-center mr-1 p-0">
+                                                <!-- <div class="minor-stoppage-card"></div> -->
                                             </div>
                                         </div>
 
@@ -244,9 +247,14 @@
                                     <div class="col-1 p-0 d-none d-md-block">
                                         <div class="row m-0 pt-2 pb-2" style="height: 100% !important;">
                                             <div class="col-sm-3 offset-1 align-content-center ">
+                                                <!-- <div class=" flash stoppage-card text-center" data-toggle="modal"
+                                                    data-target="#justify-modal"
+                                                    onclick="buildStoppage('10:00','11:00')">
+                                                </div> -->
                                             </div>
-                                            <div class="minor-stoppage-card col-sm-3 align-content-center mr-1">
-                                            </div>
+                                            <!-- <div class="col-sm-3 align-content-center mr-1 p-0">
+                                                <div class="minor-stoppage-card"></div>
+                                            </div> -->
                                         </div>
 
                                     </div>
@@ -266,11 +274,16 @@
                                         <span>Incorreto - Solda</span>
                                     </div>
                                     <div class="col-1 p-0 d-none d-md-block">
-                                        <div class="row m-0 pt-2 pb-2" style="height: 100%;">
+                                        <div class="row m-0 pt-2 pb-2" style="height: 100% !important;">
                                             <div class="col-sm-3 offset-1 align-content-center ">
+                                                <!-- <div class=" flash stoppage-card text-center" data-toggle="modal"
+                                                    data-target="#justify-modal"
+                                                    onclick="buildStoppage('10:00','11:00')">
+                                                </div> -->
                                             </div>
-                                            <div class="minor-stoppage-card col-sm-3 align-content-center mr-1">
-                                            </div>
+                                            <!-- <div class="col-sm-3 align-content-center mr-1 p-0">
+                                                <div class="minor-stoppage-card"></div>
+                                            </div> -->
                                         </div>
 
                                     </div>
@@ -290,10 +303,14 @@
                                         <span>Incorreto - Torto </span>
                                     </div>
                                     <div class="col-1 p-0 d-none d-md-block">
-                                        <div class="row m-0 pt-2 pb-2" style="height: 100%;">
-                                            <div class="flash stoppage-card col-sm-3 offset-1 align-content-center ">
+                                        <div class="row m-0 align-content-center" style="height: 100% !important;">
+                                            <div class="col-sm-3 offset-3">
+                                                <div class=" flash stoppage-card " data-toggle="modal"
+                                                    data-target="#justify-modal">
+                                                </div>
                                             </div>
-                                            <div class="minor-stoppage-card col-sm-3 align-content-center mr-1">
+                                            <div class="col-sm-3 align-content-center mr-1 p-0">
+                                                <!-- <div class="minor-stoppage-card"></div> -->
                                             </div>
                                         </div>
 
@@ -418,14 +435,6 @@
                                 </select>
                             </div>
                         </div>
-                        <!-- <div id='div_dplNivel3Scrap' class="col-lg-12 ">
-                            <div class="form-group">
-                                <label class='' style='font-weight: bold; font-size: 20px;'>Motivo Nivel 3. </label>
-                                <select class='form-control' name="" id="dplNivel3Scrap" required disabled>
-                                    <option value="Selecione">Selecione</option>
-                                </select>
-                            </div>
-                        </div> -->
 
                         <div id='div_comentarioScrap' class="col-lg-12">
                             <div class="form-group">
@@ -484,8 +493,8 @@
                     <div class="modal-body">
 
                         <div class="row mr-1 ml-1 mb-0">
-                            <div id='stoppage-div' onclick='buildStoppage()'
-                                class="col-lg-6 text-center text-black rounded bg-danger selected-stoppage-type"
+                            <div id='stoppage-div' onclick="buildStoppage()"
+                                class=" col-lg-6 text-center text-black rounded bg-danger selected-stoppage-type"
                                 style='font-size: 20px; font-weight: 500; '>
                                 <span>PARADAS</span>
                                 <br>
@@ -493,7 +502,7 @@
                                 <br>
                                 <span id='stoppage-resume'>0 Parada - 0 Produto(s) - 0 Minutos</span>
                             </div>
-                            <div id='minor-div' onclick='buildMinorStoppage()'
+                            <div id='minor-div' onclick="buildMinorStoppage()"
                                 class="col-lg-6 text-center text-black rounded bg-warning"
                                 style='font-size: 20px; font-weight: 500;'>
                                 <span>MICRO PARADAS</span>
@@ -511,29 +520,28 @@
                                     style="background-color:#E8E8E8; font-size: 25px; font-weight: 700;">
                                     <span id='work-station'>Estação: </span>
                                     <hr>
-                                    <span id='amount-not-justyfied'>Paradas nao justificadas: 0</span>
-                                    <hr>
-                                    <span id='spanHorarioParada'>Horário: </span>
+                                    <span id='stop-interval'>Horário: </span>
                                     <br>
                                     <hr>
-                                    <span>Justificada: <i id='iconeJustificada' class="fa fa-close fa-1x"
-                                            style="color: red"> </i></span>
+                                    <span id='is-justified'>Justificada: <i class="fa fa-minus-circle"></i> </span>
+                                    </span>
                                 </div>
 
                                 <div class='text-center mt-1'>
-                                    <button id="next-stoppage-btn" class="btn btn-info"
-                                        style="color: white;margin-right: 50px;">
+                                    <button id="previous-stoppage-btn" class="btn btn-info"
+                                        style="color: white;margin-right: 50px;"
+                                        onclick="getPreviousStop('10:00','11:00')">
                                         <i class="fa fa-arrow-left fa-3x fa-lg"></i> Anterior
                                     </button>
-                                    <button id="previous-stoppage-btn" class="btn btn-info">
+                                    <button id="next-stoppage-btn" class="btn btn-info"
+                                        onclick="getNextStop('10:00','11:00')">
                                         <span>Próxima <i class="fa fa-arrow-right fa-3x fa-lg"></i></span>
                                     </button>
                                 </div>
                             </div>
 
                             <div class="col-lg-8 p-2">
-
-
+                                <input id="stoppage-id" style="display: none;">
                                 <div id="div_dplNivel1" class="col-lg-12">
                                     <div class="form-group">
                                         <label style='font-weight: bold; font-size: 20px;' for="dplNivel1"
@@ -561,8 +569,8 @@
                                         <label id='labelComentario' style='font-weight: bold; font-size: 20px;'
                                             for="comentario">Comentario:</label>
 
-                                        <textarea class="form-control" id="comentario" rows="4" cols="50"
-                                            maxlength="499" pattern="[a-zA-Z0-9]+"></textarea>
+                                        <textarea class="form-control" id="comment" rows="4" cols="50" maxlength="499"
+                                            pattern="[a-zA-Z0-9]+" required></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -583,7 +591,7 @@
 
 
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="button" onclick='salvarJustificativa()'
+                            <button type="button" onclick='saveNewJustification()'
                                 class="btn btn-success">Salvar</button>
 
                         </div>
@@ -732,6 +740,9 @@
     <script src="assets/plugins/blockUI.js"></script>
 
     <script src="assets/js/index.js"></script>
+
+
+    <link rel="stylesheet" href="assets/img/open-iconic-master/font/css/open-iconic-bootstrap.css">
 </body>
 
 </html>

@@ -105,10 +105,15 @@ body{
 .stoppage-card{
     background-color: red;
     border-radius: 50%;
+    height: 1.3vw;
+    width: 1.3vw;
+    
 }
 .minor-stoppage-card{
     background-color: #ffea00;
     border-radius: 50%;
+     height: 1.3vw;
+    width: 1.3vw;
 }
 
 #next-stoppage-btn, #previous-stoppage-btn{

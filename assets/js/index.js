@@ -1,6 +1,7 @@
-const currentDate = moment(new Date()).format('DD/MM');
+var indexStop = 0;
+const currentDate = moment(new Date()).format('YYYY-MM-DD');
+var stoppages = []
 
-var oee = [55, 57, 59, 62, 65, 77, 80, 85, 83, 85, 87, 90, 88, 85, 83, 80, 83, 84, 87, 90, 91, 95, 94, 96, 98, 94, 93, 89];
 
 $(function () {
 
@@ -17,20 +18,13 @@ $(function () {
         resetScrapModal()
         buildProductScrap();
     });
-
     // ----------- HIDE ---------------
-    $('.modal').on('hide.bs.modal', function () {
-        // index = 0;
-        // refereTurnoAnterior = false;
-        // getDados();
-        // popUpAberto = false
+    $('#justify-modal').on('hide.bs.modal', function () {
+        indexStop = 0;
     })
 
     //  ----------------------------------------- MOTIVOS SCRAP -----------------------------------------
-    $('#selectSKUScrap').on('change', function () {
-        let idProduto = $(`#selectSKUScrapList option[value='${$('#selectSKUScrap').val()}']`).attr('data-id') == null ? 0 : $(`#selectSKUScrapList option[value='${$('#selectSKUScrap').val()}']`).attr('data-id');
-        carregarMotivoScrap(idProduto, '', 'scrapReason1', () => { })
-    })
+
     $('#scrapReason1').on('change', function () {
         if ($(this).val() != "Selecione") {
             $("#scrapReason2").attr('disabled', false)
@@ -43,7 +37,7 @@ $(function () {
     //  ----------------------------------------- MOTIVOS PARADAS -----------------------------------------
     $('#reason1-select').on('change', function () {
         if ($(this).val() != 0) {
-            buildReasonLevel2();
+            buildStopsReasonsLevel2();
             $('#reason2-select').attr('disabled', false)
         } else {
             $('#reason2-select').attr('disabled', true).val(0)
@@ -51,113 +45,106 @@ $(function () {
 
     })
 
-    // ------------------------------------------- CLICK/CHANGE EVENTS -------------------------------------
+    $(".td-cause").on('click', function () {
+        const interval = $(this).parent().children().first().html().split("-")
+        stoppages = getStoppageData(interval)
 
-    $('#btnModalDivisoes').on('click', function () {
-        montaModalDivisao(parameGetDadosParada.classificacaoParada);
+        resumeStops(interval);
+        buildStoppage()
+
     })
-
 
 })
 
 //  =================================================================================================================================
-//-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# REQUEST DE DADOS -#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+//-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# STOPPAGE MODAL -#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
 //  =================================================================================================================================
 
-function getProdutoAtual() {
-    let produto = {}
+function buildStoppage(classification) {
 
-    $.ajax({
-        url: trxProduto,
-        type: 'GET',
-        datatype: 'XML',
-        data: {
-            'tipo': 'SELECT',
-            'idItemOrg': idItemOrg,
-            'visao': tipoVisao
-        },
-        success: function (data) {
-            $(data).find('Row').each(function () {
-                produto.idProduto = $(this).find('IdProduto').text();
-                produto.modelo = $(this).find('Modelo').text();
-                produto.nomeProduto = $(this).find('NomeProduto').text();
-            });
-        }
-    }).done(function () {
-        montarModalProduto(produto);
-    })
-}
-
-
-function buildStoppage(classificacaoParada) {
+    resetStoppageModal();
     $("#stoppage-div").addClass("selected-stoppage-type");
-    $("#minor-div").removeClass("selected-stoppage-type")
+    $("#minor-div").removeClass("selected-stoppage-type");
+
+    const stops = stoppages.filter(function (s) { return s.classification == "stoppage" })
+    indexStop = indexStop >= stops.length ? stops.length - 1 : indexStop
+
+    $("#stoppage-id").val(stops[indexStop].id)
+    $("#work-station").html(`Estação: ${stops[indexStop].workstation}`)
+    $("#stop-interval").html(`Horario: </br> ${stops[indexStop].startDate.substring(11)} - ${stops[indexStop].endDate.substring(11)}`)
+
+    //  ------------------ CHECKs IF JUSTIFIED -----------------
+    if (stops[indexStop].justified) {
+        $("#is-justified").children().addClass('fa-check-circle').removeClass('fa-minus-circle').css('color', 'green');
+        buildJustified(stops[indexStop]);
+    } else {
+        $("#is-justified").children().removeClass('fa-check-circle').addClass('fa-minus-circle').css('color', 'red');
+    }
 }
-function buildMinorStoppage(classificacaoParada) {
+function buildMinorStoppage() {
+
+    resetStoppageModal();
     $("#minor-div").addClass("selected-stoppage-type");
-    $("#stoppage-div").removeClass("selected-stoppage-type")
+    $("#stoppage-div").removeClass("selected-stoppage-type");
+
+    const stops = stoppages.filter(function (s) { return s.classification == "minor" })
+    indexStop = indexStop >= stops.length ? stops.length - 1 : indexStop
+
+    //  ------------------ CHECK IF JUSTIFIED ----------------- 
+    $("#stoppage-id").val(stops[indexStop].id)
+    $("#work-station").html(`Estação: ${stops[indexStop].workstation}`)
+    $("#stop-interval").html(`Horario: </br> ${stops[indexStop].startDate.substring(11)} - ${stops[indexStop].endDate.substring(11)}`)
+
+    if (stops[indexStop].justified) {
+        $("#is-justified").children().addClass('fa-check-circle').removeClass('fa-minus-circle').css('color', 'green');
+        buildJustified(stops[indexStop]);
+    } else {
+        $("#is-justified").children().removeClass('fa-check-circle').addClass('fa-minus-circle').css('color', 'red');
+    }
 }
+function buildJustified(stop) {
+    $("#reason1-select").val(stop.reason1).attr('disabled', true)
+    buildStopsReasonsLevel2()
+    $("#reason2-select").val(stop.reason2).attr('disabled', true)
+    $("#comment").val(stop.comment).attr('disabled', true)
+}
+function getNextStop() {
+    indexStop += 1
+    $("#stoppage-div").hasClass("selected-stoppage-type") ?
+        buildStoppage() :
+        buildMinorStoppage()
+}
+function getPreviousStop() {
+    indexStop += indexStop > 0 ? -1 : indexStop
+    $("#stoppage-div").hasClass("selected-stoppage-type") ?
+        buildStoppage() :
+        buildMinorStoppage()
+}
+function resumeStops(interval) {
+    const type = ["minor", "stoppage"];
 
-function montaModalDivisao() {
-    let parada = arrayParadas[index];
-    if (parada.flagJust == 1) { return }
+    const start = currentDate + ' ' + interval[0].trim()
+    const end = currentDate + ' ' + interval[1].trim()
 
-    let dataInicial = moment(parada.dataInicio).format("YYYY-MM-DD HH:mm:ss");
-    let dataFim = moment(parada.dataFim).format("YYYY-MM-DD HH:mm:ss");
+    $("#stoppage-interval, #minor-interval").html(`${start.substring(11)} - ${end.substring(11)}`);
 
+    type.forEach(function (classification) {
 
-    $("#datetimepicker1").datetimepicker("destroy");
-    $('#spanHorarioDivisaoParada').html('Horário: ' + moment(parada.dataInicio).format("HH:mm:ss") + ' - ' + moment(parada.dataFim).format("HH:mm:ss"))
-    $('#datetimepicker1').datetimepicker({
-        format: 'DD/MM/YYYY HH:mm:ss',
+        let stops = stoppages.filter(function (s) { return s.classification == classification });
 
-        minDate: dataInicial,
-        maxDate: dataFim
+        let resume = [0, 0, 0];
+
+        stops.map(function (stop) {
+            resume[0] += 1; // COUNT
+            resume[1] += stop.amountProducts; // PRODUCTS
+            resume[2] += stop.intervalMinutes; // MINUTES
+        })
+        $(`#${classification}-resume`).html(`${resume[0]} Parada(s) - ${resume[1]} Produto(s) - ${resume[2]} Minuto(s)`)
     })
 
 
 }
-
-
-function buildProductScrap() { // REFERENTE AO MODAL DE SCRAP
-    resetScrapModal()
-    $('#div_apontamentoSerial').removeClass('btn-info').addClass('btn-secondary');
-    $('#div_apontamentoSKU').removeClass('btn-secondary').addClass('btn-info');
-
-    $('#serial-number-input, #serial-number-div').attr('disabled', true)
-    $('#amount-div, #inputQuantidadeScrap').removeClass('hide').attr('disabled', false);
-    $('#selectProduct').attr('disabled', false);
-    $("#amount-div").show()
-    $("#serial-number-div").hide()
-
-}
-function buildSerialNumberScrap() { // REFERENTE AO MODAL DE SCRAP
-    resetScrapModal()
-    $('#div_apontamentoSKU').removeClass('btn-info').addClass('btn-secondary');
-    $('#div_apontamentoSerial').removeClass('btn-secondary').addClass('btn-info');
-
-    $('#selectProduct').attr('disabled', true).val('Selecione');
-    $('#serial-number-div, #serial-number-input').show().attr('disabled', false)
-    $('#amount-scrap-input, #amount-div').attr('disabled', true).hide()
-
-}
-function saveNewScrap() {
-    if (validateEmptyRequiredFields('scrap-modal') == "invalid") return
-
-    const amountScrap = $("#amount-scrap-input").is(":enabled") ? parseInt($("#amount-scrap-input").val()) : 1;
-    const currentScraps = parseInt($('#scrap-text').html().substring(8));
-
-    Swal.fire('', 'Salvo com sucesso', 'success');
-    $('#scrap-text').html(`SCRAP : ${currentScraps + amountScrap} `);
-    $('#scrap-modal').modal('toggle');
-
-}
-
-//  =================================================================================================================================
-//  -#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# FUNCS DE MANUTENCAO -#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
-//  =================================================================================================================================
-
-function buildReasonLevel2() {
+function buildStopsReasonsLevel2() {
     const reasons = [
         {
             "idPai": 1,
@@ -196,12 +183,77 @@ function buildReasonLevel2() {
     $('#reason2-select').append(`<option value="0">Selecione</option>`)
     reason2.forEach(function (m) {
         const option = `<option value="${m.id}">${m.nome}</option>`
-        console.log(option);
         $('#reason2-select').append(option);
     })
 
 }
+function resetStoppageModal() {
+    $("#reason1-select").val("0").attr('disabled', false)
+    $("#reason2-select").val("0").attr('disabled', true)
+    $("#comment").val(null).attr('disabled', false)
+}
+function getStoppageData(interval) {
 
+    const startDate = currentDate + ' ' + interval[0].trim()
+    const endDate = currentDate + ' ' + interval[1].trim()
+
+    return stops.filter(function (s) {
+        return new Date(s.startDate) >= new Date(startDate) &&
+            new Date(s.endDate) <= new Date(endDate)
+    })
+
+
+
+}
+function saveNewJustification() {
+    if (validateEmptyRequiredFields('justify-modal') == "invalid") { return }
+
+    const reason1 = $("#reason1-select").val()
+    const reason2 = $("#reason2-select").val()
+    const comment = $("#comment").val()
+    const id = $("#stoppage-id").val()
+
+    let stop = stops.find(stop => stop.id == id)
+
+    stop.reason1 = reason1
+    stop.reason2 = reason2
+    stop.comment = comment
+    stop.justified = true;
+
+    Swal.fire("", "Justificativa salva com sucesso", "success")
+
+    $("#justify-modal").modal("toggle");
+
+
+
+
+
+}
+//  =================================================================================================================================
+//  -#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# SCRAP MODAL FUNCS -#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+//  =================================================================================================================================
+
+function buildProductScrap() { // REFERENTE AO MODAL DE SCRAP
+    resetScrapModal()
+    $('#div_apontamentoSerial').removeClass('btn-info').addClass('btn-secondary');
+    $('#div_apontamentoSKU').removeClass('btn-secondary').addClass('btn-info');
+
+    $('#serial-number-input, #serial-number-div').attr('disabled', true)
+    $('#selectProduct').attr('disabled', false);
+    $("#amount-div, #amount-scrap-input").show().attr('disabled', false);
+    $("#serial-number-div").hide()
+
+}
+function buildSerialNumberScrap() { // REFERENTE AO MODAL DE SCRAP
+    resetScrapModal()
+    $('#div_apontamentoSKU').removeClass('btn-info').addClass('btn-secondary');
+    $('#div_apontamentoSerial').removeClass('btn-secondary').addClass('btn-info');
+
+    $('#selectProduct').attr('disabled', true).val('Selecione');
+    $('#serial-number-div, #serial-number-input').show().attr('disabled', false)
+    $('#amount-scrap-input, #amount-div').attr('disabled', true).hide()
+
+}
 function resetScrapModal() {
 
     $('#selectMachine, #selectProduct, #scrapReason1, #scrapReason2').val('Selecione');
@@ -211,22 +263,22 @@ function resetScrapModal() {
 
     $('#selectSKUScrap').val(null);
 }
+function saveNewScrap() {
+    if (validateEmptyRequiredFields('scrap-modal') == "invalid") return
 
-function resetStoppageModal() {
+    const amountScrap = $("#amount-scrap-input").is(":enabled") ? parseInt($("#amount-scrap-input").val()) : 1;
+    const currentScraps = parseInt($('#scrap-text').html().substring(8));
 
-    $('#dplNivel1, #pPausas, #dplOrigem').attr('disabled', false).val('Selecione').removeClass('hide');
-    $('#pPausas, #div_dplNivel1, #btnModalDivisoes, #div_btnCopiar, #div_dplOrigem').attr('disabled', false).removeClass('hide');
-    $('#motivoNv1').html('Motivo Nivel 1: ')
-    $('#origem').html('Origem: ')
-
-    for (let i = 2; i <= 4; i++) {
-        $('#dplNivel' + i + ', #div_dplNivel' + i).attr('disabled', true).addClass('hide').val('Selecione');
-        $('#motivoNv' + i).html('Motivo Nivel ' + i)
-    }
-    $('#comentario, #div_comentario').val('').attr('disabled', false).removeClass('hide');
-    $('#labelComentario').html('Comentario: ')
+    Swal.fire('', 'Salvo com sucesso', 'success');
+    $('#scrap-text').html(`SCRAP : ${currentScraps + amountScrap} `);
+    $('#scrap-modal').modal('toggle');
 
 }
+
+
+//  =================================================================================================================================
+//  -#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# MAINTENANCE FUNCS-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+//  =================================================================================================================================
 
 function validateEmptyRequiredFields(modal) {
     const filledFields = $('#scrap-modal input,#scrap-modal textarea,#scrap-modal select')
@@ -269,3 +321,64 @@ function setOEEColor(oee) {
         $("#oee-status-circle").removeClass('flash');
     }
 }
+
+//  =================================================================================================================================
+//  -#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# DATA MOCK-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+//  =================================================================================================================================
+
+var oee = [55, 57, 59, 62, 65, 77, 80, 85, 83, 85, 87, 90, 88, 85, 83, 80, 83, 84, 87, 90, 91, 95, 94, 96, 98, 94, 93, 89];
+
+var stops = [
+    {
+        "id": 1,
+        "startDate": "2020-07-24 10:07:00",
+        "endDate": "2020-07-24 10:11:00",
+        "workstation": "WS0010",
+        "justified": false,
+        "reason1": null,
+        "reason2": null,
+        "comment": null,
+        "classification": "stoppage",
+        "intervalMinutes": 3,
+        "amountProducts": 6
+    },
+    {
+        "id": 2,
+        "startDate": "2020-07-24 10:15:00",
+        "endDate": "2020-07-24 10:18:00",
+        "workstation": "WS0010",
+        "justified": true,
+        "reason1": 1,
+        "reason2": 2,
+        "comment": "Funcionario solicitou pausa",
+        "classification": "stoppage",
+        "intervalMinutes": 4,
+        "amountProducts": 8
+    },
+    {
+        "id": 3,
+        "startDate": "2020-07-24 10:36:00",
+        "endDate": "2020-07-24 10:42:00",
+        "workstation": "WS0010",
+        "justified": false,
+        "reason1": null,
+        "reason2": null,
+        "comment": null,
+        "classification": "stoppage",
+        "intervalMinutes": 6,
+        "amountProducts": 12
+    },
+    {
+        "id": 4,
+        "startDate": "2020-07-24 10:12:00",
+        "endDate": "2020-07-24 10:12:50",
+        "workstation": "WS0010",
+        "justified": false,
+        "reason1": null,
+        "reason2": null,
+        "comment": null,
+        "classification": "minor",
+        "intervalMinutes": 0.8,
+        "amountProducts": 1
+    }
+]
