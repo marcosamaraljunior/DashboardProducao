@@ -45,11 +45,8 @@ $(function () {
     })
 
     $(".td-cause").on('click', function () {
-        interval = $(this).parent().children().first().html().split("-")
-        stoppages = getStoppageData(interval)
-        resumeStops(interval);
+        interval = $(this).parent().children().first().html().split("-") // FIXO
         buildStoppage()
-
     })
 
 })
@@ -60,21 +57,24 @@ $(function () {
 
 function buildStoppage() {
 
+    const stops = getStopData(interval);
+    resumeStops(interval, stops);
+
     resetStoppageModal();
     $("#stoppage-div").addClass("selected-stoppage-type");
     $("#minor-div").removeClass("selected-stoppage-type");
 
-    const stops = stoppages.filter(function (s) { return s.classification == "stoppage" })
-    indexStop = indexStop >= stops.length ? stops.length - 1 : indexStop
+    const stoppages = stops.filter(function (s) { return s.classification == "stoppage" })
+    indexStop = indexStop >= stoppages.length ? stoppages.length - 1 : indexStop
 
-    $("#stoppage-id").val(stops[indexStop].id)
-    $("#work-station").html(`Estação: ${stops[indexStop].workstation}`)
-    $("#stop-interval").html(`Horario: </br> ${stops[indexStop].startDate.substring(11)} - ${stops[indexStop].endDate.substring(11)}`)
+    $("#stoppage-id").val(stoppages[indexStop].id)
+    $("#work-station").html(`Estação: ${stoppages[indexStop].workstation}`)
+    $("#stop-interval").html(`Horario: </br> ${stoppages[indexStop].startDate.substring(11)} - ${stoppages[indexStop].endDate.substring(11)}`)
 
     //  ------------------ CHECKs IF JUSTIFIED -----------------
-    if (stops[indexStop].justified) {
+    if (stoppages[indexStop].justified) {
         $("#is-justified").children().addClass('fa-check-circle').removeClass('fa-minus-circle').css('color', 'green');
-        buildJustified(stops[indexStop]);
+        buildJustified(stoppages[indexStop]);
     } else {
         $("#is-justified").children().removeClass('fa-check-circle').addClass('fa-minus-circle').css('color', 'red');
     }
@@ -82,20 +82,24 @@ function buildStoppage() {
 function buildMinorStoppage() {
 
     resetStoppageModal();
+
     $("#minor-div").addClass("selected-stoppage-type");
     $("#stoppage-div").removeClass("selected-stoppage-type");
 
-    const stops = stoppages.filter(function (s) { return s.classification == "minor" })
-    indexStop = indexStop >= stops.length ? stops.length - 1 : indexStop
+    const stops = getStopData(interval)
+    resumeStops(interval, stops);
+
+    const minorStoppages = stops.filter(function (s) { return s.classification == "minor" })
+    indexStop = indexStop >= minorStoppages.length ? minorStoppages.length - 1 : indexStop
 
     //  ------------------ CHECK IF JUSTIFIED ----------------- 
-    $("#stoppage-id").val(stops[indexStop].id)
-    $("#work-station").html(`Estação: ${stops[indexStop].workstation}`)
-    $("#stop-interval").html(`Horario: </br> ${stops[indexStop].startDate.substring(11)} - ${stops[indexStop].endDate.substring(11)}`)
+    $("#stoppage-id").val(minorStoppages[indexStop].id)
+    $("#work-station").html(`Estação: ${minorStoppages[indexStop].workstation}`)
+    $("#stop-interval").html(`Horario: </br> ${minorStoppages[indexStop].startDate.substring(11)} - ${minorStoppages[indexStop].endDate.substring(11)}`)
 
-    if (stops[indexStop].justified) {
+    if (minorStoppages[indexStop].justified) {
         $("#is-justified").children().addClass('fa-check-circle').removeClass('fa-minus-circle').css('color', 'green');
-        buildJustified(stops[indexStop]);
+        buildJustified(minorStoppages[indexStop]);
     } else {
         $("#is-justified").children().removeClass('fa-check-circle').addClass('fa-minus-circle').css('color', 'red');
     }
@@ -118,7 +122,7 @@ function getPreviousStop() {
         buildStoppage() :
         buildMinorStoppage()
 }
-function resumeStops(interval) {
+function resumeStops(interval, stoppages) {
     const type = ["minor", "stoppage"];
 
     const start = currentDate + ' ' + interval[0].trim()
@@ -190,7 +194,7 @@ function resetStoppageModal() {
     $("#reason2-select").val("0").attr('disabled', true)
     $("#comment").val(null).attr('disabled', false)
 }
-function getStoppageData(interval) {
+function getStopData(interval) {
 
     const startDate = currentDate + ' ' + interval[0].trim()
     const endDate = currentDate + ' ' + interval[1].trim()
@@ -229,29 +233,25 @@ function saveNewJustification() {
 
 function buildSplitModal() {
 
-    const stopID = $("#stoppage-id").val();
+    const stopId = $("#stoppage-id").val();
+    const [startDate, endDate] = $("#stop-interval").html().split("<br>")[1].trim().split("-")
 
-    const stop = stoppages.find(function (s) { return s.id == stopID });
-    console.log(stop);
-
-
-
-    $("#split-stoppage").html(`Parada ID: ${stop.id}`)
-    $("#split-interval").html(`Horario: ${stop.startDate.substring(11)} - ${stop.endDate.substring(11)}`);
+    $("#split-stoppage").html(`Parada ID: ${stopId}`)
+    $("#split-interval").html(`Horario: ${startDate} - ${endDate}`);
 
     $('#datetimepicker1').datetimepicker('destroy')
 
     $('#datetimepicker1').datetimepicker({
         format: 'HH:mm:ss',
-        minDate: new Date(stop.startDate),
-        maxDate: new Date(stop.endDate)
+        minDate: new Date(`${currentDate} ${startDate.trim()}`),
+        maxDate: new Date(`${currentDate} ${endDate.trim()}`)
 
     })
 
 }
 function saveSplit() {
     const stopID = $("#stoppage-id").val();
-    const originalStop = stoppages.find(function (s) { return s.id == stopID });
+    const originalStop = stops.find(function (s) { return s.id == stopID });
 
     const newEndDate = $("#input-split-date").val()
 
@@ -269,12 +269,14 @@ function saveSplit() {
         "amountProducts": originalStop.amountProducts
     }
 
-    originalStop.endDate = "2020-07-24 " + newEndDate;
+    originalStop.endDate = currentDate + " " + newEndDate;
 
     stops.push(newStop);
 
     Swal.fire("", "Divisao inserida com sucesso", "success");
-    $("#split-modal, #justify-modal").modal('toggle');
+
+    buildStoppage()
+    $("#split-modal").modal('toggle');
 
 
 }
