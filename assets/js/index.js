@@ -8,7 +8,10 @@ $(function () {
 
     OEESimulator();
 
-    $('#inputDateScrap').datetimepicker({
+    $('#input-scrap-date').datetimepicker({
+        format: 'DD/MM/YYYY HH:mm:ss'
+    })
+    $('#input-split-date').datetimepicker({
         format: 'DD/MM/YYYY HH:mm:ss'
     })
 
@@ -57,10 +60,10 @@ $(function () {
 })
 
 //  =================================================================================================================================
-//-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# STOPPAGE MODAL -#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+//  -#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# STOPPAGE MODAL FUNCS -#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
 //  =================================================================================================================================
 
-function buildStoppage(classification) {
+function buildStoppage() {
 
     resetStoppageModal();
     $("#stoppage-div").addClass("selected-stoppage-type");
@@ -274,8 +277,6 @@ function saveNewScrap() {
     $('#scrap-modal').modal('toggle');
 
 }
-
-
 //  =================================================================================================================================
 //  -#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# MAINTENANCE FUNCS-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
 //  =================================================================================================================================
@@ -294,7 +295,7 @@ function validateEmptyRequiredFields(modal) {
     }
 }
 
-OEESimulator = function () {
+function OEESimulator() {
 
     oee.forEach((oee, i) => {
         setTimeout(() => {
@@ -380,5 +381,57 @@ var stops = [
         "classification": "minor",
         "intervalMinutes": 0.8,
         "amountProducts": 1
-    }
+    },
+    {
+        "id": 5,
+        "startDate": "2020-07-24 13:16:00",
+        "endDate": "2020-07-24 13:20:50",
+        "workstation": "WS0010",
+        "justified": false,
+        "reason1": null,
+        "reason2": null,
+        "comment": null,
+        "classification": "stoppage",
+        "intervalMinutes": 4.8,
+        "amountProducts": 9
+    },
+    {
+        "id": 6,
+        "startDate": "2020-07-24 13:32:00",
+        "endDate": "2020-07-24 13:38:50",
+        "workstation": "WS0010",
+        "justified": false,
+        "reason1": null,
+        "reason2": null,
+        "comment": null,
+        "classification": "stoppage",
+        "intervalMinutes": 6.8,
+        "amountProducts": 13
+    },
+    {
+        "id": 7,
+        "startDate": "2020-07-24 13:43:00",
+        "endDate": "2020-07-24 13:44:50",
+        "workstation": "WS0010",
+        "justified": false,
+        "reason1": null,
+        "reason2": null,
+        "comment": null,
+        "classification": "minor",
+        "intervalMinutes": 1.8,
+        "amountProducts": 4
+    },
+    {
+        "id": 8,
+        "startDate": "2020-07-24 13:52:00",
+        "endDate": "2020-07-24 13:54:50",
+        "workstation": "WS0010",
+        "justified": true,
+        "reason1": 2,
+        "reason2": 2,
+        "comment": "Pausa para lanche",
+        "classification": "minor",
+        "intervalMinutes": 2.8,
+        "amountProducts": 6
+    },
 ]
