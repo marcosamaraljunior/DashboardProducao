@@ -297,7 +297,7 @@
                             <td>2000</td>
                             <td>-200</td>
                             <td>1800</td>
-                            <td class="td-cause">
+                            <td class="td-cause" data-toggle="modal" data-target="#justify-modal">
                                 <div class="row m-0">
                                     <div class="col-11">
                                         <span>Falta de Pecas - Placa</span>
@@ -305,8 +305,7 @@
                                     <div class="col-1 p-0 d-none d-md-block">
                                         <div class="row m-0 align-content-center" style="height: 100% !important;">
                                             <div class="col-sm-3 offset-3">
-                                                <div class=" flash stoppage-card " data-toggle="modal"
-                                                    data-target="#justify-modal">
+                                                <div class=" flash stoppage-card ">
                                                 </div>
                                             </div>
                                             <div class="col-sm-3 align-content-center mr-1 p-0">
@@ -324,7 +323,6 @@
         </section>
     </main>
 
-    <!-- MISSING TIMEPICKER -->
     <section id='scrap-section'>
         <div class="modal fade" id="scrap-modal">
             <div class="modal-dialog modal-lg" style="height:600px; width:1200; max-width:1360px">
@@ -584,7 +582,8 @@
 
                             <div class="footerLeft mr-auto" style="float: left">
                                 <button type="button" id='btnModalDivisoes' class="btn btn-info mr-5"
-                                    data-toggle="modal" data-target="#split-modal">Dividir Parada</button>
+                                    data-toggle="modal" data-target="#split-modal" onclick="buildSplitModal()">Dividir
+                                    Parada</button>
                             </div>
 
 
@@ -618,9 +617,9 @@
                     <div class="modal-body text-center">
                         <div class='rounded p-2 text-center'
                             style="background-color:#E8E8E8; font-size: 25px; font-weight: 700;">
-                            <span id='spanParada'>Parada</span>
+                            <span id='split-stoppage'>Parada</span>
                             <hr>
-                            <span id='spanHorarioDivisaoParada'>Horário: </span>
+                            <span id='split-interval'>Horário: </span>
                             <br>
                             <hr>
                             <fieldset class="form-group">
@@ -651,7 +650,7 @@
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 
                                 </div>
-                                <div class="col-lg-6"><button type="button" onclick='inserirDivisao()'
+                                <div class="col-lg-6"><button type="button" onclick='saveSplit()'
                                         class="btn btn-success">Salvar</button></div>
                             </div>
                         </div>

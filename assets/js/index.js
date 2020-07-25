@@ -1,32 +1,25 @@
 var indexStop = 0;
-const currentDate = moment(new Date()).format('YYYY-MM-DD');
-var stoppages = []
+const currentDate = moment(new Date('2020-07-24 00:00:00').toUTCString()).format('YYYY-MM-DD');
+var stoppages = [];
+
+var interval;
 
 
 $(function () {
-
 
     OEESimulator();
 
     $('#input-scrap-date').datetimepicker({
         format: 'DD/MM/YYYY HH:mm:ss'
     })
-    $('#input-split-date').datetimepicker({
-        format: 'DD/MM/YYYY HH:mm:ss'
-    })
 
-    // ----------------------------- MODAL CONFIGS -----------------------------------------------------
+    // ------------------------------------------ MODAL CONFIGS -----------------------------------------
 
     $('#scrap-modal').on('show.bs.modal', function () {
         resetScrapModal()
         buildProductScrap();
     });
-    // ----------- HIDE ---------------
-    $('#justify-modal').on('hide.bs.modal', function () {
-        indexStop = 0;
-    })
-
-    //  ----------------------------------------- MOTIVOS SCRAP -----------------------------------------
+    //  -----------------------------------------  SCRAP REASONS -----------------------------------------
 
     $('#scrapReason1').on('change', function () {
         if ($(this).val() != "Selecione") {
@@ -36,8 +29,7 @@ $(function () {
         }
     })
 
-
-    //  ----------------------------------------- MOTIVOS PARADAS -----------------------------------------
+    //  --------------------------------------------  STOPS  ---------------------------------------
     $('#reason1-select').on('change', function () {
         if ($(this).val() != 0) {
             buildStopsReasonsLevel2();
@@ -48,10 +40,13 @@ $(function () {
 
     })
 
-    $(".td-cause").on('click', function () {
-        const interval = $(this).parent().children().first().html().split("-")
-        stoppages = getStoppageData(interval)
+    $('#justify-modal').on('hide.bs.modal', function () {
+        indexStop = 0;
+    })
 
+    $(".td-cause").on('click', function () {
+        interval = $(this).parent().children().first().html().split("-")
+        stoppages = getStoppageData(interval)
         resumeStops(interval);
         buildStoppage()
 
@@ -200,12 +195,11 @@ function getStoppageData(interval) {
     const startDate = currentDate + ' ' + interval[0].trim()
     const endDate = currentDate + ' ' + interval[1].trim()
 
-    return stops.filter(function (s) {
+    const stoppages = stops.filter(function (s) {
         return new Date(s.startDate) >= new Date(startDate) &&
             new Date(s.endDate) <= new Date(endDate)
     })
-
-
+    return stoppages.sort(compareDate)
 
 }
 function saveNewJustification() {
@@ -227,11 +221,64 @@ function saveNewJustification() {
 
     $("#justify-modal").modal("toggle");
 
+}
+
+//  =================================================================================================================================
+//  -#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# SPLIT MODAL FUNCS -#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+//  =================================================================================================================================
+
+function buildSplitModal() {
+
+    const stopID = $("#stoppage-id").val();
+
+    const stop = stoppages.find(function (s) { return s.id == stopID });
+    console.log(stop);
 
 
+
+    $("#split-stoppage").html(`Parada ID: ${stop.id}`)
+    $("#split-interval").html(`Horario: ${stop.startDate.substring(11)} - ${stop.endDate.substring(11)}`);
+
+    $('#datetimepicker1').datetimepicker('destroy')
+
+    $('#datetimepicker1').datetimepicker({
+        format: 'HH:mm:ss',
+        minDate: new Date(stop.startDate),
+        maxDate: new Date(stop.endDate)
+
+    })
+
+}
+function saveSplit() {
+    const stopID = $("#stoppage-id").val();
+    const originalStop = stoppages.find(function (s) { return s.id == stopID });
+
+    const newEndDate = $("#input-split-date").val()
+
+    const newStop = {
+        "id": stops.length + 1,
+        "startDate": "2020-07-24 " + newEndDate,
+        "endDate": originalStop.endDate,
+        "workstation": originalStop.workstation,
+        "justified": originalStop.justified,
+        "reason1": originalStop.reason1,
+        "reason2": originalStop.reason2,
+        "comment": originalStop.comment,
+        "classification": originalStop.classification,
+        "intervalMinutes": originalStop.intervalMinutes,
+        "amountProducts": originalStop.amountProducts
+    }
+
+    originalStop.endDate = "2020-07-24 " + newEndDate;
+
+    stops.push(newStop);
+
+    Swal.fire("", "Divisao inserida com sucesso", "success");
+    $("#split-modal, #justify-modal").modal('toggle');
 
 
 }
+
 //  =================================================================================================================================
 //  -#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# SCRAP MODAL FUNCS -#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
 //  =================================================================================================================================
@@ -277,6 +324,7 @@ function saveNewScrap() {
     $('#scrap-modal').modal('toggle');
 
 }
+
 //  =================================================================================================================================
 //  -#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# MAINTENANCE FUNCS-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
 //  =================================================================================================================================
@@ -294,7 +342,6 @@ function validateEmptyRequiredFields(modal) {
         return "valid"
     }
 }
-
 function OEESimulator() {
 
     oee.forEach((oee, i) => {
@@ -308,7 +355,6 @@ function OEESimulator() {
     }, 3000 * oee.length);
 
 }
-
 function setOEEColor(oee) {
 
     if (oee < 90 && oee > 75) {
@@ -321,6 +367,19 @@ function setOEEColor(oee) {
         $("#oee-status-circle").css({ 'background-color': '#2e956e' })
         $("#oee-status-circle").removeClass('flash');
     }
+}
+function compareDate(a, b) {
+    // Use toUpperCase() to ignore character casing
+    const dateA = new Date(a.startDate);
+    const dateB = new Date(b.endDate);
+
+    let comparison = 0;
+    if (dateA > dateB) {
+        comparison = 1;
+    } else if (dateA < dateB) {
+        comparison = -1;
+    }
+    return comparison;
 }
 
 //  =================================================================================================================================
