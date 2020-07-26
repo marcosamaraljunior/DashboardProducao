@@ -184,7 +184,7 @@
 
         <section id="current-shift">
             <div class="p-0">
-                <table class="table table-sm table-hover " style='font-size: 30px' id="current-shift-table">
+                <table class="table table-sm table-hover" style='font-size: 30px' id="current-shift-table">
                     <thead>
                         <tr>
                             <th colspan='7' id='current-shift-title' class='text-white'
@@ -201,21 +201,21 @@
                             <th class="th-real">Prod Real</th>
 
 
-                            <th style="width:50%; background-color: #2E303E" class="text-white">Parada Principal</th>
+                            <th style="width:50%; background-color: #2E303E" class="text-white">Paradas</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>10:00 - 11:00</td>
                             <td>2300</td>
-                            <td>-500</td>
+                            <td>-700</td>
                             <td>2000</td>
-                            <td>-200</td>
-                            <td>1800</td>
+                            <td>-400</td>
+                            <td class="bg bg-warning">1600</td>
                             <td class="td-cause" data-toggle="modal" data-target="#justify-modal">
                                 <div class="row m-0">
                                     <div class="col-11">
-                                        <span>Pausa - Ginastica</span>
+                                        <span>Pausa / Ginastica</span>
                                     </div>
                                     <div class="col-1 p-0 d-none d-md-block">
                                         <div class="row m-0 align-content-center" style="height: 100% !important;">
@@ -242,7 +242,7 @@
                             <td class="td-cause">
                                 <div class="row m-0">
                                     <div class="col-11">
-                                        <span>Danificado - Arranhado</span>
+                                        <span>---</span>
                                     </div>
                                     <div class="col-1 p-0 d-none d-md-block">
                                         <div class="row m-0 pt-2 pb-2" style="height: 100% !important;">
@@ -271,7 +271,7 @@
                             <td class="td-cause">
                                 <div class="row m-0">
                                     <div class="col-11">
-                                        <span>Incorreto - Solda</span>
+                                        <span>---</span>
                                     </div>
                                     <div class="col-1 p-0 d-none d-md-block">
                                         <div class="row m-0 pt-2 pb-2" style="height: 100% !important;">
@@ -293,14 +293,14 @@
                         <tr>
                             <td>13:00 - 14:00</td>
                             <td>2300</td>
-                            <td>-500</td>
+                            <td>-900</td>
                             <td>2000</td>
-                            <td>-200</td>
-                            <td>1800</td>
+                            <td>-600</td>
+                            <td class="flash">1400</td>
                             <td class="td-cause" data-toggle="modal" data-target="#justify-modal">
                                 <div class="row m-0">
                                     <div class="col-11">
-                                        <span>Falta de Pecas - Placa</span>
+                                        <span>Falta de Peças / Placa</span>
                                     </div>
                                     <div class="col-1 p-0 d-none d-md-block">
                                         <div class="row m-0 align-content-center" style="height: 100% !important;">
@@ -349,20 +349,20 @@
                             <div id='div_apontamentoSerial' onclick="buildSerialNumberScrap()"
                                 class="col-lg-6 btn btn-secondary">
                                 <div class="form-group">
-                                    <span style='font-size: 20px;font-weight: bold;'>Serial Number</span>
+                                    <span style='font-size: 20px;font-weight: bold;'>Número serial</span>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label style='font-weight: bold; font-size: 20px;'>Maquina: </label>
+                                    <label style='font-weight: bold; font-size: 20px;'>Máquina: </label>
                                     <select id='selectMachine' style='font-weight: bold;' class="form-control" required>
                                         <option value="Selecione">Selecione: </option>
-                                        <option value="1">Maquina W </option>
-                                        <option value="2">Maquina X </option>
-                                        <option value="3">Maquina Y </option>
-                                        <option value="4">Maquina Z </option>
+                                        <option value="1">Máquina X </option>
+                                        <option value="2">Máquina X </option>
+                                        <option value="3">Máquina Y </option>
+                                        <option value="4">Máquina Z </option>
 
                                     </select>
                                 </div>
@@ -405,7 +405,7 @@
                             </div>
                             <div id='serial-number-div' style="display: none;" class="col-lg-6 ">
                                 <div class="form-group">
-                                    <label style='font-weight: bold; font-size: 20px;'>Numero Serial: </label>
+                                    <label style='font-weight: bold; font-size: 20px;'>Número Serial: </label>
                                     <input id='serial-number-input' style='font-weight: bold;' class="form-control"
                                         type="text" required disabled>
                                 </div>
@@ -414,7 +414,7 @@
 
                         <div id='div_scrapReason1' class="col-lg-12 ">
                             <div class="form-group">
-                                <label class='' style='font-weight: bold; font-size: 20px;'>Motivo Nivel 1: </label>
+                                <label class='' style='font-weight: bold; font-size: 20px;'>Motivo Nível 1: </label>
                                 <select class='form-control' name="" id="scrapReason1" required>
                                     <option value="Selecione">Selecione</option>
                                     <option value="1">Danificado</option>
@@ -424,7 +424,7 @@
                         </div>
                         <div id='div_scrapReason2' class="col-lg-12">
                             <div class="form-group">
-                                <label class='' style='font-weight: bold; font-size: 20px;'>Motivo Nivel 2. </label>
+                                <label class='' style='font-weight: bold; font-size: 20px;'>Motivo Nível 2. </label>
                                 <select class='form-control' name="" id="scrapReason2" required disabled>
                                     <option value="Selecione">Selecione</option>
                                     <option value="1">Amassado</option>
@@ -437,7 +437,7 @@
 
                         <div id='div_comentarioScrap' class="col-lg-12">
                             <div class="form-group">
-                                <label class='' style='font-weight: bold; font-size: 20px;'>Comentario: </label>
+                                <label class='' style='font-weight: bold; font-size: 20px;'>Comentário: </label>
                                 <textarea class="form-control" id="scrap-comment" rows="3" cols="50" maxlength="499"
                                     pattern="[a-zA-Z0-9]+"></textarea>
                             </div>
@@ -539,10 +539,10 @@
 
                             <div class="col-lg-8 p-2">
                                 <input id="stoppage-id" style="display: none;">
-                                <div id="div_dplNivel1" class="col-lg-12">
+                                <div id="div-reason1" class="col-lg-12">
                                     <div class="form-group">
                                         <label style='font-weight: bold; font-size: 20px;' for="dplNivel1"
-                                            id="reason1">Motivo Nivel 1</label>
+                                            id="reason1">Motivo Nível 1</label>
                                         <select class="form-control" id="reason1-select" required>
                                             <option value="0">Selecione</option>
                                             <option value="1">Pausa</option>
@@ -551,10 +551,10 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div id="div_dplNivel2" class="col-lg-12 hide">
+                                <div id="div-reason2" class="col-lg-12 hide">
                                     <div class="form-group">
                                         <label style='font-weight: bold; font-size: 20px;' for="dplNivel2"
-                                            id="motivoNv2">Motivo Nivel 2</label>
+                                            id="motivoNv2">Motivo Nível 2</label>
                                         <select class="form-control" id="reason2-select" required disabled>
                                             <option value="0">Selecione</option>
                                         </select>
@@ -564,7 +564,7 @@
                                 <div id="div_comentario" class="col-lg-12">
                                     <div class="form-group">
                                         <label id='labelComentario' style='font-weight: bold; font-size: 20px;'
-                                            for="comentario">Comentario:</label>
+                                            for="comentario">Comentário:</label>
 
                                         <textarea class="form-control" id="comment" rows="4" cols="50" maxlength="499"
                                             pattern="[a-zA-Z0-9]+" required></textarea>
@@ -623,7 +623,7 @@
                             <br>
                             <hr>
                             <fieldset class="form-group">
-                                <h4 class="text-black">Horario de Divisao: </h4>
+                                <h4 class="text-black">Horário de Divisão: </h4>
                                 <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
                                     <input id="input-split-date" type="text" class="form-control datetimepicker-input"
                                         data-target="#datetimepicker1" />
