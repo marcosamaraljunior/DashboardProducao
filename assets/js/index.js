@@ -9,7 +9,7 @@ $(function () {
 
     OEESimulator();
 
-    $('#input-scrap-date').datetimepicker({
+    $('#datetimepicker2').datetimepicker({
         format: 'DD/MM/YYYY HH:mm:ss'
     })
 
@@ -69,7 +69,7 @@ function buildStoppage() {
 
     $("#stoppage-id").val(stoppages[indexStop].id)
     $("#work-station").html(`Estação: ${stoppages[indexStop].workstation}`)
-    $("#stop-interval").html(`Horario: </br> ${stoppages[indexStop].startDate.substring(11)} - ${stoppages[indexStop].endDate.substring(11)}`)
+    $("#stop-interval").html(`Horário: </br> ${stoppages[indexStop].startDate.substring(11)} - ${stoppages[indexStop].endDate.substring(11)}`)
 
     //  ------------------ CHECKs IF JUSTIFIED -----------------
     if (stoppages[indexStop].justified) {
@@ -95,7 +95,7 @@ function buildMinorStoppage() {
     //  ------------------ CHECK IF JUSTIFIED ----------------- 
     $("#stoppage-id").val(minorStoppages[indexStop].id)
     $("#work-station").html(`Estação: ${minorStoppages[indexStop].workstation}`)
-    $("#stop-interval").html(`Horario: </br> ${minorStoppages[indexStop].startDate.substring(11)} - ${minorStoppages[indexStop].endDate.substring(11)}`)
+    $("#stop-interval").html(`Horário: </br> ${minorStoppages[indexStop].startDate.substring(11)} - ${minorStoppages[indexStop].endDate.substring(11)}`)
 
     if (minorStoppages[indexStop].justified) {
         $("#is-justified").children().addClass('fa-check-circle').removeClass('fa-minus-circle').css('color', 'green');
@@ -237,7 +237,7 @@ function buildSplitModal() {
     const [startDate, endDate] = $("#stop-interval").html().split("<br>")[1].trim().split("-")
 
     $("#split-stoppage").html(`Parada ID: ${stopId}`)
-    $("#split-interval").html(`Horario: ${startDate} - ${endDate}`);
+    $("#split-interval").html(`Horário: ${startDate} - ${endDate}`);
 
     $('#datetimepicker1').datetimepicker('destroy')
 
