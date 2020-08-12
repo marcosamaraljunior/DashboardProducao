@@ -1,4 +1,4 @@
-# DASHBOARD PRODUCAO
+# DASHBOARD PRODUÇÃO
 
 Este projeto possui o intuito de simular um dashboard para acompanhamento de produção em um sistema MES.
 
